@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hogswartz — A Private Estate Experience</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F5F0E8;
+    --warm-white: #FAF7F2;
+    --deep-forest: #1C2B1E;
+    --forest: #2D4A31;
+    --gold: #B8965A;
+    --gold-light: #D4B07A;
+    --gold-pale: #EDD9A3;
+    --charcoal: #2A2A2A;
+    --muted: #7A7060;
+    --border: rgba(184,150,90,0.25);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--warm-white);
+    color: var(--charcoal);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 4rem;
+    background: transparent;
+    transition: background 0.5s, backdrop-filter 0.5s;
+  }
+  nav.scrolled {
+    background: rgba(28,43,30,0.92);
+    backdrop-filter: blur(12px);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 300;
+    letter-spacing: 0.12em;
+    color: var(--gold-light);
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold-light); }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: var(--deep-forest);
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(45,74,49,0.6) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(184,150,90,0.12) 0%, transparent 50%),
+      linear-gradient(160deg, #0d1a0e 0%, #1C2B1E 40%, #243322 100%);
+  }
+
+  .hero-ornament {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(900px, 95vw);
+    height: min(900px, 95vw);
+    border: 1px solid rgba(184,150,90,0.08);
+    border-radius: 50%;
+    animation: rotate 60s linear infinite;
+  }
+  .hero-ornament::before {
+    content: '';
+    position: absolute;
+    inset: 40px;
+    border: 1px solid rgba(184,150,90,0.06);
+    border-radius: 50%;
+  }
+  .hero-ornament::after {
+    content: '';
+    position: absolute;
+    inset: 80px;
+    border: 1px solid rgba(184,150,90,0.04);
+    border-radius: 50%;
+  }
+  @keyframes rotate { to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+  .hero-content {
+    position: relative;
+    text-align: center;
+    padding: 0 2rem;
+    animation: fadeUp 1.4s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2rem;
+    animation: fadeUp 1.4s 0.2s ease both;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(5rem, 12vw, 10rem);
+    font-weight: 300;
+    line-height: 0.9;
+    color: #fff;
+    letter-spacing: -0.01em;
+    margin-bottom: 1rem;
+    animation: fadeUp 1.4s 0.3s ease both;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.08em;
+    margin-bottom: 3.5rem;
+    animation: fadeUp 1.4s 0.5s ease both;
+  }
+
+  .hero-divider {
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+    margin: 0 auto 3.5rem;
+    animation: fadeUp 1.4s 0.6s ease both;
+  }
+
+  .hero-cta {
+    display: inline-block;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    background: var(--gold-light);
+    padding: 1.1rem 3rem;
+    text-decoration: none;
+    transition: background 0.3s, letter-spacing 0.3s;
+    animation: fadeUp 1.4s 0.7s ease both;
+  }
+  .hero-cta:hover {
+    background: var(--gold-pale);
+    letter-spacing: 0.35em;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    animation: fadeUp 2s 1.2s ease both;
+  }
+  .hero-scroll span {
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+  }
+  .scroll-line {
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(to bottom, rgba(184,150,90,0.6), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(0.8) translateY(0); }
+    50% { opacity: 1; transform: scaleY(1) translateY(4px); }
+  }
+
+  /* SECTION COMMONS */
+  section { position: relative; }
+
+  .section-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--deep-forest);
+  }
+  .section-title em {
+    font-style: italic;
+    color: var(--forest);
+  }
+
+  .gold-rule {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+  .gold-rule::before, .gold-rule::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .gold-rule-diamond {
+    width: 6px;
+    height: 6px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  /* INTRO / ABOUT */
+  .intro {
+    padding: 8rem 4rem;
+    background: var(--cream);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+  .intro-text p {
+    font-size: 1.05rem;
+    font-weight: 300;
+    line-height: 1.9;
+    color: var(--muted);
+    margin-top: 1.5rem;
+  }
+  .intro-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .stat-cell {
+    background: var(--warm-white);
+    padding: 2.5rem 2rem;
+    text-align: center;
+  }
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem;
+    font-weight: 300;
+    color: var(--deep-forest);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .stat-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* AMENITIES BAR */
+  .amenities-bar {
+    background: var(--deep-forest);
+    padding: 3rem 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    overflow: hidden;
+  }
+  .amenity-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0 3rem;
+    border-right: 1px solid rgba(184,150,90,0.2);
+    flex-shrink: 0;
+  }
+  .amenity-item:last-child { border-right: none; }
+  .amenity-icon {
+    font-size: 1.3rem;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .amenity-text {
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    text-align: center;
+  }
+
+  /* ROOMS */
+  .rooms-section {
+    padding: 8rem 4rem;
+    background: var(--warm-white);
+  }
+  .rooms-header {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 6rem;
+  }
+  .rooms-header p {
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.9;
+    color: var(--muted);
+    margin-top: 1rem;
+  }
+
+  /* Room cards — alternating layout */
+  .room-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin-bottom: 3px;
+    min-height: 560px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .room-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .room-card.reverse { direction: rtl; }
+  .room-card.reverse > * { direction: ltr; }
+
+  .room-visual {
+    position: relative;
+    overflow: hidden;
+  }
+  .room-visual-bg {
+    position: absolute;
+    inset: 0;
+    transition: transform 0.8s ease;
+  }
+  .room-card:hover .room-visual-bg {
+    transform: scale(1.04);
+  }
+
+  /* Each room has a unique palette */
+  .room-1 .room-visual-bg {
+    background:
+      radial-gradient(ellipse at 30% 30%, rgba(45,74,49,0.8) 0%, transparent 60%),
+      linear-gradient(135deg, #1C2B1E 0%, #2D4A31 50%, #3d5e42 100%);
+  }
+  .room-2 .room-visual-bg {
+    background:
+      radial-gradient(ellipse at 70% 40%, rgba(184,150,90,0.5) 0%, transparent 60%),
+      linear-gradient(135deg, #2A1F0E 0%, #4A3820 50%, #5C4A2A 100%);
+  }
+  .room-3 .room-visual-bg {
+    background:
+      radial-gradient(ellipse at 40% 60%, rgba(60,50,80,0.8) 0%, transparent 60%),
+      linear-gradient(135deg, #1A1525 0%, #2D2540 50%, #3A3050 100%);
+  }
+  .room-4 .room-visual-bg {
+    background:
+      radial-gradient(ellipse at 60% 30%, rgba(30,50,70,0.8) 0%, transparent 60%),
+      linear-gradient(135deg, #0E1E2A 0%, #1A3040 50%, #253D50 100%);
+  }
+  .room-5 .room-visual-bg {
+    background:
+      radial-gradient(ellipse at 40% 40%, rgba(90,30,30,0.6) 0%, transparent 60%),
+      linear-gradient(135deg, #1E0E0E 0%, #3A1515 50%, #4A2020 100%);
+  }
+
+  .room-visual-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* SVG bed illustration inside each room */
+  .room-illustration {
+    width: 220px;
+    opacity: 0.35;
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5));
+  }
+
+  .room-number {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 5rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.07);
+    line-height: 1;
+    user-select: none;
+  }
+
+  .room-tag {
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: rgba(28,43,30,0.6);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(184,150,90,0.3);
+    padding: 0.5rem 1rem;
+  }
+
+  .room-info {
+    background: var(--cream);
+    padding: 4rem 4.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .room-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    font-weight: 300;
+    color: var(--deep-forest);
+    line-height: 1.15;
+    margin-bottom: 0.5rem;
+  }
+  .room-name em {
+    font-style: italic;
+    color: var(--forest);
+  }
+  .room-desc {
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 1.9;
+    color: var(--muted);
+    margin: 1.5rem 0 2rem;
+  }
+  .room-features {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem 1rem;
+    margin-bottom: 2.5rem;
+  }
+  .room-features li {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .room-features li::before {
+    content: '';
+    width: 16px;
+    height: 1px;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+  .room-size {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+  .room-size-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .room-size-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--deep-forest);
+  }
+  .room-size-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* EXPERIENCE SECTION */
+  .experience {
+    background: var(--deep-forest);
+    padding: 8rem 4rem;
+    text-align: center;
+  }
+  .experience .section-title { color: #fff; }
+  .experience .section-title em { color: var(--gold-light); }
+  .experience > p {
+    max-width: 580px;
+    margin: 1.5rem auto 5rem;
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.9;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .experience-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(184,150,90,0.15);
+    border: 1px solid rgba(184,150,90,0.15);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .experience-card {
+    background: rgba(28,43,30,0.6);
+    padding: 3rem 2.5rem;
+    text-align: center;
+    transition: background 0.3s;
+  }
+  .experience-card:hover {
+    background: rgba(45,74,49,0.5);
+  }
+  .exp-icon {
+    font-size: 2rem;
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+  .exp-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 300;
+    color: var(--gold-light);
+    margin-bottom: 0.8rem;
+  }
+  .exp-text {
+    font-size: 0.85rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.45);
+  }
+
+  /* QUOTE */
+  .quote-section {
+    padding: 7rem 4rem;
+    background: var(--cream);
+    text-align: center;
+  }
+  .quote-mark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 6rem;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 0.5;
+    margin-bottom: 2rem;
+    display: block;
+  }
+  .quote-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--deep-forest);
+    max-width: 800px;
+    margin: 0 auto 2rem;
+  }
+  .quote-attr {
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* DETAILS / BREAKFAST */
+  .details {
+    background: var(--warm-white);
+    padding: 8rem 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8rem;
+    align-items: start;
+  }
+  .details-left .section-title { margin-bottom: 1.5rem; }
+  .details-left p {
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 1.9;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+  .menu-list {
+    margin-top: 2.5rem;
+  }
+  .menu-item {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .menu-item-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--deep-forest);
+  }
+  .menu-item-desc {
+    font-size: 0.75rem;
+    font-weight: 300;
+    color: var(--muted);
+    margin-top: 0.25rem;
+  }
+  .menu-item-tag {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .details-policies h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--deep-forest);
+    margin-bottom: 2rem;
+  }
+  .policy-item {
+    display: flex;
+    gap: 1.2rem;
+    margin-bottom: 1.5rem;
+    align-items: flex-start;
+  }
+  .policy-icon {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+  .policy-content h4 {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--deep-forest);
+    margin-bottom: 0.35rem;
+  }
+  .policy-content p {
+    font-size: 0.85rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+
+  /* CTA / BOOKING */
+  .booking {
+    background: var(--deep-forest);
+    padding: 8rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .booking::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(184,150,90,0.08) 0%, transparent 70%);
+  }
+  .booking-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 7vw, 6rem);
+    font-weight: 300;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+  .booking-title em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+  .booking-subtitle {
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.45);
+    max-width: 500px;
+    margin: 0 auto 3.5rem;
+    line-height: 1.8;
+    position: relative;
+  }
+  .booking-btn {
+    display: inline-block;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--deep-forest);
+    background: var(--gold-light);
+    padding: 1.2rem 3.5rem;
+    text-decoration: none;
+    position: relative;
+    transition: all 0.3s;
+    margin-right: 1rem;
+  }
+  .booking-btn:hover { background: var(--gold-pale); }
+  .booking-btn-outline {
+    display: inline-block;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    border: 1px solid rgba(184,150,90,0.4);
+    padding: 1.2rem 3.5rem;
+    text-decoration: none;
+    position: relative;
+    transition: all 0.3s;
+  }
+  .booking-btn-outline:hover {
+    border-color: var(--gold);
+    color: var(--gold-light);
+  }
+
+  /* FOOTER */
+  footer {
+    background: #0D1A0E;
+    padding: 4rem;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 2rem;
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    color: var(--gold-light);
+    letter-spacing: 0.1em;
+  }
+  .footer-tagline {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.2);
+    margin-top: 0.3rem;
+  }
+  .footer-center {
+    text-align: center;
+  }
+  .footer-ornament {
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+    margin: 0 auto 1.5rem;
+  }
+  .footer-legal {
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.2);
+    text-align: right;
+  }
+
+
+  /* ─── RESPONSIVE / MOBILE ─────────────────────────────── */
+
+  /* Tablet: 768px and below */
+  @media (max-width: 768px) {
+
+    /* Nav */
+    nav {
+      padding: 1.2rem 1.5rem;
+    }
+    .nav-links {
+      display: none;
+    }
+
+    /* Hero */
+    .hero { min-height: 100svh; }
+    .hero-content { padding: 0 1.5rem; }
+    .hero-title { font-size: clamp(4rem, 18vw, 6rem); }
+    .hero-subtitle { font-size: 1rem; margin-bottom: 2.5rem; }
+    .hero-divider { margin-bottom: 2.5rem; }
+
+    /* Intro */
+    .intro {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      padding: 5rem 1.5rem;
+    }
+    .intro-stats {
+      grid-template-columns: 1fr 1fr;
+    }
+    .stat-cell { padding: 1.8rem 1rem; }
+    .stat-number { font-size: 2.5rem; }
+
+    /* Amenities bar — horizontal scroll */
+    .amenities-bar {
+      padding: 2rem 1.5rem;
+      justify-content: flex-start;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      gap: 0;
+      scrollbar-width: none;
+    }
+    .amenities-bar::-webkit-scrollbar { display: none; }
+    .amenity-item {
+      padding: 0 1.8rem;
+      flex-shrink: 0;
+    }
+
+    /* Rooms section */
+    .rooms-section {
+      padding: 4rem 0;
+    }
+    .rooms-header {
+      padding: 0 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    /* Room cards — stack vertically */
+    .room-card {
+      grid-template-columns: 1fr;
+      min-height: auto;
+      margin-bottom: 2px;
+    }
+    .room-card.reverse { direction: ltr; }
+    .room-visual {
+      height: 280px;
+    }
+    .room-illustration { width: 150px; }
+    .room-number { font-size: 3.5rem; }
+    .room-info {
+      padding: 2.5rem 1.5rem;
+    }
+    .room-features {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+    .room-size { gap: 1.5rem; }
+    .room-size-value { font-size: 1.4rem; }
+
+    /* Experience section */
+    .experience {
+      padding: 5rem 1.5rem;
+    }
+    .experience-grid {
+      grid-template-columns: 1fr;
+    }
+    .experience-card { padding: 2rem 1.5rem; }
+
+    /* Quote */
+    .quote-section {
+      padding: 5rem 1.5rem;
+    }
+    .quote-mark { font-size: 4rem; }
+
+    /* Details / Dining */
+    .details {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      padding: 5rem 1.5rem;
+    }
+
+    /* Booking CTA */
+    .booking {
+      padding: 5rem 1.5rem;
+    }
+    .booking-btn, .booking-btn-outline {
+      display: block;
+      margin: 0 auto 1rem;
+      text-align: center;
+      max-width: 280px;
+    }
+    .booking-btn { margin-right: auto; }
+
+    /* Footer */
+    footer {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      padding: 3rem 1.5rem;
+      text-align: center;
+    }
+    .footer-center { order: -1; }
+    .footer-ornament { display: none; }
+    .footer-legal { text-align: center; }
+  }
+
+  /* Small phones: 420px and below */
+  @media (max-width: 420px) {
+    .hero-title { font-size: clamp(3.2rem, 20vw, 5rem); }
+    .hero-eyebrow { letter-spacing: 0.2em; }
+    .hero-cta { padding: 1rem 2rem; letter-spacing: 0.2em; }
+    .room-visual { height: 240px; }
+    .section-title { font-size: 2rem; }
+    .stat-number { font-size: 2rem; }
+    .amenity-item { padding: 0 1.2rem; }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">Hogswartz</a>
+  <ul class="nav-links">
+    <li><a href="#rooms">Rooms</a></li>
+    <li><a href="#experience">Experiences</a></li>
+    <li><a href="#breakfast">Dining</a></li>
+    <li><a href="#booking">Reserve</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-ornament"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">A Swartz Estate Weekend</p>
+    <h1 class="hero-title">Hogs<em>wartz</em></h1>
+    <p class="hero-subtitle">Where enchantment meets extraordinary hospitality</p>
+    <div class="hero-divider"></div>
+    <a href="#rooms" class="hero-cta">Explore Our Rooms</a>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- INTRO -->
+<section class="intro">
+  <div class="intro-text">
+    <p class="section-label">The Estate</p>
+    <h2 class="section-title">A private retreat<br><em>like no other</em></h2>
+    <div class="gold-rule"><div class="gold-rule-diamond"></div></div>
+    <p>Welcome to Hogswartz, an exclusive private estate nestled in serene surroundings where the legendary spirit of Hogwarts meets the warmth of the Swartz family's unparalleled hospitality.</p>
+    <p>For one enchanted weekend, our doors open exclusively for you — five magnificent chambers await, each a universe unto itself, each appointed with the finest in luxury and comfort.</p>
+  </div>
+  <div class="intro-stats">
+    <div class="stat-cell">
+      <div class="stat-number">5</div>
+      <div class="stat-label">Chambers</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-number">1</div>
+      <div class="stat-label">Weekend</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-number">∞</div>
+      <div class="stat-label">Memories</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-number">★★★★★</div>
+      <div class="stat-label">Experience</div>
+    </div>
+  </div>
+</section>
+
+<!-- AMENITIES BAR -->
+<div class="amenities-bar">
+  <div class="amenity-item">
+    <span class="amenity-icon">☕</span>
+    <span class="amenity-text">Artisan Breakfast</span>
+  </div>
+  <div class="amenity-item">
+    <span class="amenity-icon">🛁</span>
+    <span class="amenity-text">Spa Bathrooms</span>
+  </div>
+  <div class="amenity-item">
+    <span class="amenity-icon">🍷</span>
+    <span class="amenity-text">Evening Wine Hour</span>
+  </div>
+  <div class="amenity-item">
+    <span class="amenity-icon">🕯</span>
+    <span class="amenity-text">Nightly Turndown</span>
+  </div>
+  <div class="amenity-item">
+    <span class="amenity-icon">🌿</span>
+    <span class="amenity-text">Estate Gardens</span>
+  </div>
+  <div class="amenity-item">
+    <span class="amenity-icon">📚</span>
+    <span class="amenity-text">Grand Library</span>
+  </div>
+</div>
+
+<!-- ROOMS -->
+<section class="rooms-section" id="rooms">
+  <div class="rooms-header">
+    <p class="section-label">The Chambers</p>
+    <h2 class="section-title">Five Legendary<br><em>Sanctuaries</em></h2>
+    <p>Each room is a masterwork of design and comfort, drawing inspiration from the magical and the magnificent — named for the great houses of legend and appointed for the discerning guest.</p>
+  </div>
+
+  <!-- Room 1 -->
+  <div class="room-card room-1">
+    <div class="room-visual">
+      <div class="room-visual-bg"></div>
+      <div class="room-number">01</div>
+      <div class="room-visual-overlay">
+        <svg class="room-illustration" viewBox="0 0 200 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="20" y="60" width="160" height="50" rx="4" fill="rgba(255,255,255,0.15)"/>
+          <rect x="25" y="50" width="30" height="70" rx="3" fill="rgba(255,255,255,0.12)"/>
+          <rect x="145" y="50" width="30" height="70" rx="3" fill="rgba(255,255,255,0.12)"/>
+          <rect x="30" y="65" width="140" height="35" rx="3" fill="rgba(255,255,255,0.1)"/>
+          <ellipse cx="60" cy="68" rx="18" ry="12" fill="rgba(255,255,255,0.2)"/>
+          <ellipse cx="100" cy="68" rx="18" ry="12" fill="rgba(255,255,255,0.18)"/>
+          <ellipse cx="140" cy="68" rx="18" ry="12" fill="rgba(255,255,255,0.2)"/>
+          <rect x="10" y="108" width="180" height="6" rx="2" fill="rgba(255,255,255,0.08)"/>
+          <rect x="85" y="30" width="30" height="35" rx="2" fill="rgba(255,255,255,0.1)"/>
+          <circle cx="100" cy="22" r="10" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+        </svg>
+      </div>
+      <div class="room-tag">The Emerald Chamber</div>
+    </div>
+    <div class="room-info">
+      <p class="section-label">Room One</p>
+      <h3 class="room-name">The <em>Emerald</em><br>Chamber</h3>
+      <div class="gold-rule"><div class="gold-rule-diamond"></div></div>
+      <p class="room-desc">Draped in deep forest tones and rich velvet, the Emerald Chamber is an ode to ambition and prestige. A king-sized canopied bed anchors this verdant retreat, where every detail whispers of quiet luxury and timeless elegance.</p>
+      <ul class="room-features">
+        <li>King Canopy Bed</li>
+        <li>Emerald Velvet Drapes</li>
+        <li>Marble En Suite</li>
+        <li>Sitting Alcove</li>
+        <li>Garden View</li>
+        <li>Nightly Turndown</li>
+      </ul>
+      <div class="room-size">
+        <div class="room-size-item">
+          <span class="room-size-value">King</span>
+          <span class="room-size-label">Bed Size</span>
+        </div>
+        <div class="room-size-item">
+          <span class="room-size-value">Private</span>
+          <span class="room-size-label">En Suite Bath</span>
+        </div>
+        <div class="room-size-item">
+          <span class="room-size-value">Est. 1</span>
+          <span class="room-size-label">Guest Capacity</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Room 2 -->
+  <div class="room-card room-2 reverse">
+    <div class="room-visual">
+      <div class="room-visual-bg"></div>
+      <div class="room-number">02</div>
+      <div class="room-visual-overlay">
+        <svg class="room-illustration" viewBox="0 0 200 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="15" y="65" width="170" height="45" rx="4" fill="rgba(255,255,255,0.12)"/>
+          <rect x="20" y="55" width="35" height="60" rx="3" fill="rgba(255,255,255,0.1)"/>
+          <rect x="145" y="55" width="35" height="60" rx="3" fill="rgba(255,255,255,0.1)"/>
+          <rect x="28" y="68" width="144" height="28" rx="2" fill="rgba(255,255,255,0.08)"/>
+          <ellipse cx="70" cy="70" rx="22" ry="14" fill="rgba(255,255,255,0.18)"/>
+          <ellipse cx="130" cy="70" rx="22" ry="14" fill="rgba(255,255,255,0.18)"/>
+          <rect x="5" y="108" width="190" height="5" rx="1" fill="rgba(255,255,255,0.07)"/>
+          <rect x="50" y="20" width="100" height="50" rx="8" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+          <circle cx="100" cy="45" r="15" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+        </svg>
+      </div>
+      <div class="room-tag">The Amber Suite</div>
+    </div>
+    <div class="room-info">
+      <p class="section-label">Room Two</p>
+      <h3 class="room-name">The <em>Amber</em><br>Suite</h3>
+      <div class="gold-rule"><div class="gold-rule-diamond"></div></div>
+      <p class="room-desc">Warm and radiant as a harvest moon, the Amber Suite wraps you in golden light and burnished wood tones. A sanctuary of courage and warmth, furnished with heirloom antiques and plush fabrics that invite deep, restorative rest.</p>
+      <ul class="room-features">
+        <li>Queen Sleigh Bed</li>
+        <li>Antique Writing Desk</li>
+        <li>Clawfoot Tub</li>
+        <li>Window Bench</li>
+        <li>Fireplace Nook</li>
+        <li>Monogrammed Linens</li>
+      </ul>
+      <div class="room-size">
+        <div class="room-size-item">
+          <span class="room-size-value">Queen</span>
+          <span class="room-size-label">Bed Size</span>
+        </div>
+        <div class="room-size-item">
+          <span class="room-size-value">Private</span>
+          <span class="room-size-label">En Suite Bath</span>
+        </div>
+        <div class="room-size-item">
+          <span class="room-size-value">Est. 2</span>
+          <span class="room-size-label">Guest Capacity</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Room 3 -->
+  <div class="room-card room-3">
+    <div class="room-visual">
+      <div class="room-visual-bg"></div>
+      <div class="room-number">03</div>
+      <div class="room-visual-overlay">
+        <svg class="room-illustration" viewBox="0 0 200 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="25" y="60" width="150" height="50" rx="5" fill="rgba(255,255,255,0.1)"/>
+          <rect x="30" y="48" width="28" height="68" rx="3" fill="rgba(255,255,255,0.1)"/>
+          <rect x="142" y="48" width="28" height="68" rx="3" fill="rgba(255,255,255,0.1)"/>
+          <path d="M55 70 Q100 55 145 70" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" fill="none"/>
+          <rect x="35" y="72" width="130" height="25" rx="2" fill="rgba(255,255,255,0.07)"/>
+          <ellipse cx="100" cy="68" rx="25" ry="14" fill="rgba(255,255,255,0.15)"/>
+          <rect x="5" y="108" width="190" height="5" rx="1" fill="rgba(255,255,255,0.07)"/>
+          <path d="M80 10 L100 5 L120 10 L115 40 L85 40 Z" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+          <circle cx="100" cy="30" r="8" fill="rgba(255,255,255,0.12)"/>
+        </svg>
+      </div>
+      <div class="room-tag">The Midnight Loft</div>
+    </div>
+    <div class="room-info">
+      <p class="section-label">Room Three</p>
+      <h3 class="room-name">The <em>Midnight</em><br>Loft</h3>
+      <div class="gold-rule"><div class="gold-rule-diamond"></div></div>
+      <p class="room-desc">As mysterious and brilliant as a midnight sky, this elevated chamber enchants with deep indigo and midnight plum. The vaulted ceiling draws the eye upward while a celestial canopy of fairy lights creates a starscape above your bed.</p>
+      <ul class="room-features">
+        <li>King Platform Bed</li>
+        <li>Celestial Canopy</li>
+        <li>Rain Shower</li>
+        <li>Reading Nook</li>
+        <li>Star-Gazing Skylight</li>
+        <li>Pillow Menu</li>
+      </ul>
+      <div class="room-size">
+        <div class="room-size-item">
+          <span class="room-size-value">King</span>
+          <span class="room-size-label">Bed Size</span>
+        </div>
+        <div class="room-size-item">
+          <span class="room-size-value">Private</span>
+          <span class="room-size-label">En Suite Bath</span>
+        </div>
+        <div class="room-size-item">
+          <span class="room-size-value">Est. 2</span>
+          <span class="room-size-label">Guest Capacity</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Room 4 -->
+  <div class="room-card room-4 reverse">
+    <div class="room-visual">
+      <div class="room-visual-bg"></div>
+      <div class="room-number">04</div>
+      <div class="room-visual-overlay">
+        <svg class="room-illustration" viewBox="0 0 200 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="20" y="62" width="160" height="48" rx="4" fill="rgba(255,255,255,0.1)"/>
+          <rect x="25" y="52" width="32" height="65" rx="3" fill="rgba(255,255,255,0.1)"/>
+          <rect x="143" y="52" width="32" height="65" rx="3" fill="rgba(255,255,255,0.1)"/>
+          <rect x="33" y="70" width="134" height="28" rx="2" fill="rgba(255,255,255,0.07)"/>
+          <ellipse cx="75" cy="72" rx="20" ry="13" fill="rgba(255,255,255,0.2)"/>
+          <ellipse cx="125" cy="72" rx="20" ry="13" fill="rgba(255,255,255,0.2)"/>
+          <rect x="5" y="108" width="190" height="5" rx="1" fill="rgba(255,255,255,0.07)"/>
+          <rect x="30" y="10" width="60" height="50" rx="4" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+          <rect x="110" y="10" width="60" height="50" rx="4" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+        </svg>
+      </div>
+      <div class="room-tag">The Sapphire Wing</div>
+    </div>
+    <div class="room-info">
+      <p class="section-label">Room Four</p>
+      <h3 class="room-name">The <em>Sapphire</em><br>Wing</h3>
+      <div class="gold-rule"><div class="gold-rule-diamond"></div></div>
+      <p class="room-desc">A chamber of cool intelligence and serene beauty, the Sapphire Wing calms the mind and elevates the spirit. Ocean-blue silks and polished steel accents create an atmosphere of refined modernity, where thoughtful design meets genuine comfort.</p>
+      <ul class="room-features">
+        <li>Twin Queen Beds</li>
+        <li>Silk Upholstery</li>
+        <li>Soaking Tub</li>
+        <li>Work Alcove</li>
+        <li>Espresso Station</li>
+        <li>Evening Chocolates</li>
+      </ul>
+      <div class="room-size">
+        <div class="room-size-item">
+          <span class="room-size-value">Twin QN</span>
+          <span class="room-size-label">Bed Size</span>
+        </div>
+        <div class="room-size-item">
+          <span class="room-size-value">Private</span>
+          <span class="room-size-label">En Suite Bath</span>
+        </div>
+        <div class="room-size-item">
+          <span class="room-size-value">Est. 2</span>
+          <span class="room-size-label">Guest Capacity</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Room 5 -->
+  <div class="room-card room-5">
+    <div class="room-visual">
+      <div class="room-visual-bg"></div>
+      <div class="room-number">05</div>
+      <div class="room-visual-overlay">
+        <svg class="room-illustration" viewBox="0 0 200 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="15" y="58" width="170" height="52" rx="6" fill="rgba(255,255,255,0.1)"/>
+          <rect x="20" y="46" width="38" height="72" rx="4" fill="rgba(255,255,255,0.12)"/>
+          <rect x="142" y="46" width="38" height="72" rx="4" fill="rgba(255,255,255,0.12)"/>
+          <rect x="28" y="66" width="144" height="34" rx="3" fill="rgba(255,255,255,0.07)"/>
+          <ellipse cx="100" cy="70" rx="30" ry="16" fill="rgba(255,255,255,0.18)"/>
+          <rect x="5" y="108" width="190" height="6" rx="2" fill="rgba(255,255,255,0.07)"/>
+          <path d="M60 10 C60 10 100 0 140 10 L140 45 Q100 55 60 45 Z" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+          <line x1="100" y1="0" x2="100" y2="48" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+        </svg>
+      </div>
+      <div class="room-tag">The Crimson Parlour Suite</div>
+    </div>
+    <div class="room-info">
+      <p class="section-label">Room Five</p>
+      <h3 class="room-name">The <em>Crimson</em><br>Parlour Suite</h3>
+      <div class="gold-rule"><div class="gold-rule-diamond"></div></div>
+      <p class="room-desc">Our grandest and most storied accommodation — the Crimson Parlour Suite commands the finest position in the estate. Draped in rich burgundy and gold, with a private sitting room and the largest bed in the house, this is Hogswartz at its most magnificent.</p>
+      <ul class="room-features">
+        <li>Grand King Bed</li>
+        <li>Private Sitting Room</li>
+        <li>Dual Vanity Bath</li>
+        <li>Champagne on Arrival</li>
+        <li>Estate View Balcony</li>
+        <li>Personalized Butler</li>
+      </ul>
+      <div class="room-size">
+        <div class="room-size-item">
+          <span class="room-size-value">Grand</span>
+          <span class="room-size-label">Bed Size</span>
+        </div>
+        <div class="room-size-item">
+          <span class="room-size-value">Suite</span>
+          <span class="room-size-label">Room Type</span>
+        </div>
+        <div class="room-size-item">
+          <span class="room-size-value">Est. 2</span>
+          <span class="room-size-label">Guest Capacity</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE SECTION -->
+<section class="experience" id="experience">
+  <p class="section-label">The Hogswartz Life</p>
+  <h2 class="section-title">Beyond the <em>Ordinary</em></h2>
+  <p>Every moment at Hogswartz is crafted with intention. From the hour you arrive until the bittersweet farewell, an extraordinary weekend unfolds.</p>
+
+  <div class="experience-grid">
+    <div class="experience-card">
+      <span class="exp-icon">🌅</span>
+      <h3 class="exp-title">Morning Ritual</h3>
+      <p class="exp-text">Wake to birdsong and the aroma of freshly ground coffee delivered to your door before you even stir.</p>
+    </div>
+    <div class="experience-card">
+      <span class="exp-icon">🍳</span>
+      <h3 class="exp-title">Estate Breakfast</h3>
+      <p class="exp-text">A lavish spread in the grand dining room — artisan pastries, farm eggs, seasonal fruits, and flowing mimosas.</p>
+    </div>
+    <div class="experience-card">
+      <span class="exp-icon">🎲</span>
+      <h3 class="exp-title">Game Room</h3>
+      <p class="exp-text">Challenge your fellow guests in the estate's private game room — billiards, chess, and a fully-stocked cocktail cabinet.</p>
+    </div>
+    <div class="experience-card">
+      <span class="exp-icon">🛁</span>
+      <h3 class="exp-title">Spa Evenings</h3>
+      <p class="exp-text">Retire each evening with artisan bath salts, essential oils, and fluffy robes laid out by your chamber's attendant.</p>
+    </div>
+    <div class="experience-card">
+      <span class="exp-icon">🍷</span>
+      <h3 class="exp-title">Wine & Gather</h3>
+      <p class="exp-text">The estate's grand parlour becomes a nightly gathering place — curated wines, charcuterie, and good conversation.</p>
+    </div>
+    <div class="experience-card">
+      <span class="exp-icon">⭐</span>
+      <h3 class="exp-title">Starlit Terrace</h3>
+      <p class="exp-text">End each night beneath the open sky on the heated terrace, sipping cocoa under a canopy of stars.</p>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section class="quote-section">
+  <span class="quote-mark">"</span>
+  <blockquote class="quote-text">
+    There is something genuinely magical about Hogswartz — as if the very walls conspire to make you feel like royalty, while never once letting you forget the warmth of true friendship.
+  </blockquote>
+  <p class="quote-attr">— A Founding Weekend Guest</p>
+</section>
+
+<!-- DETAILS / DINING -->
+<section class="details" id="breakfast">
+  <div class="details-left">
+    <p class="section-label">Morning Dining</p>
+    <h2 class="section-title">The Grand<br><em>Breakfast Table</em></h2>
+    <div class="gold-rule"><div class="gold-rule-diamond"></div></div>
+    <p>Breakfast at Hogswartz is not a meal — it is a ceremony. Gathered in the warmth of the estate's sun-drenched dining room, guests are treated to an ever-changing tableau of the finest morning fare, prepared with seasonal ingredients and presented with care.</p>
+
+    <div class="menu-list">
+      <div class="menu-item">
+        <div>
+          <div class="menu-item-name">The Hogswartz Eggs Benedict</div>
+          <div class="menu-item-desc">House-cured salmon, chive hollandaise, brioche</div>
+        </div>
+        <span class="menu-item-tag">Signature</span>
+      </div>
+      <div class="menu-item">
+        <div>
+          <div class="menu-item-name">Seasonal Fruit Pavlova</div>
+          <div class="menu-item-desc">Whipped mascarpone, local berries, edible flowers</div>
+        </div>
+        <span class="menu-item-tag">Daily</span>
+      </div>
+      <div class="menu-item">
+        <div>
+          <div class="menu-item-name">Artisan Pastry Basket</div>
+          <div class="menu-item-desc">Croissants, pain au chocolat, house preserves</div>
+        </div>
+        <span class="menu-item-tag">Daily</span>
+      </div>
+      <div class="menu-item">
+        <div>
+          <div class="menu-item-name">Estate Mimosa Flight</div>
+          <div class="menu-item-desc">Champagne with seasonal pressed juices</div>
+        </div>
+        <span class="menu-item-tag">Weekend Special</span>
+      </div>
+      <div class="menu-item">
+        <div>
+          <div class="menu-item-name">The Full Estate Platter</div>
+          <div class="menu-item-desc">Heritage sausages, garden tomatoes, farm eggs your way</div>
+        </div>
+        <span class="menu-item-tag">Signature</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="details-policies">
+    <h3 class="section-title">Estate <em>Details</em></h3>
+    <div class="gold-rule"><div class="gold-rule-diamond"></div></div>
+
+    <div class="policy-item">
+      <span class="policy-icon">🕐</span>
+      <div class="policy-content">
+        <h4>Check-In</h4>
+        <p>Arrival from 3:00 PM. A welcome reception with champagne awaits upon your arrival in the Grand Foyer.</p>
+      </div>
+    </div>
+    <div class="policy-item">
+      <span class="policy-icon">🌤</span>
+      <div class="policy-content">
+        <h4>Check-Out</h4>
+        <p>Departure by noon on Sunday. Late check-out may be arranged — simply speak with your estate concierge.</p>
+      </div>
+    </div>
+    <div class="policy-item">
+      <span class="policy-icon">🍽</span>
+      <div class="policy-content">
+        <h4>Dining Hours</h4>
+        <p>Breakfast is served 8:00 – 10:30 AM in the Grand Dining Room. Evening wine hour begins at 6:00 PM in the Parlour.</p>
+      </div>
+    </div>
+    <div class="policy-item">
+      <span class="policy-icon">🤫</span>
+      <div class="policy-content">
+        <h4>Exclusive Access</h4>
+        <p>Hogswartz operates as a fully private estate. Only our five rooms are available each weekend — your group has the entire property.</p>
+      </div>
+    </div>
+    <div class="policy-item">
+      <span class="policy-icon">✨</span>
+      <div class="policy-content">
+        <h4>Nightly Turndown</h4>
+        <p>Each evening your chamber is refreshed with fresh towels, pillow mist, and a small treat left upon your pillow.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING CTA -->
+<section class="booking" id="booking">
+  <h2 class="booking-title">Begin Your<br><em>Enchanted</em> Stay</h2>
+  <p class="booking-subtitle">Five chambers. One weekend. A memory that will outlast every ordinary moment that came before it.</p>
+  <a href="#rooms" class="booking-btn">Choose Your Chamber</a>
+  <a href="#experience" class="booking-btn-outline">View Experiences</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">Hogswartz</div>
+    <div class="footer-tagline">A Swartz Estate Weekend</div>
+  </div>
+  <div class="footer-center">
+    <div class="footer-ornament"></div>
+    <div style="font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(184,150,90,0.4);">Est. This Weekend</div>
+  </div>
+  <div class="footer-legal">
+    Where friends become<br>legendary guests
+  </div>
+</footer>
+
+<script>
+  // Nav scroll effect
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 80);
+  });
+
+  // Scroll reveal for room cards
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.room-card').forEach(card => {
+    observer.observe(card);
+  });
+</script>
+</body>
+</html>
