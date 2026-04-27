@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hogswartz — Print Invitations</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+
+/* ── RESET ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --deep-forest: #1C2B1E;
+  --forest:      #2D4A31;
+  --gold:        #B8965A;
+  --gold-light:  #D4B07A;
+  --gold-pale:   #EDD9A3;
+  --cream:       #F5F0E8;
+  --warm-white:  #FAF7F2;
+  --muted:       #7A7060;
+  --charcoal:    #2A2A2A;
+  --border:      rgba(184,150,90,0.3);
+}
+
+body {
+  font-family: 'Jost', sans-serif;
+  background: #EDEAE3;
+  color: var(--charcoal);
+  min-height: 100vh;
+}
+
+/* ── EDITOR UI ──────────────────────────────────────────── */
+.editor-bar {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: var(--deep-forest);
+  padding: 0.9rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.4);
+  flex-wrap: wrap;
+}
+.editor-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  font-weight: 300;
+  color: var(--gold-light);
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  margin-right: 0.5rem;
+}
+.editor-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  white-space: nowrap;
+}
+.editor-input {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--charcoal);
+  background: var(--warm-white);
+  border: 1px solid var(--border);
+  padding: 0.5rem 1rem;
+  outline: none;
+  width: 220px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.editor-input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(184,150,90,0.15);
+}
+.editor-input::placeholder { color: var(--muted); font-style: italic; }
+
+.print-btn {
+  margin-left: auto;
+  font-size: 0.62rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--charcoal);
+  background: var(--gold-light);
+  border: none;
+  padding: 0.65rem 1.6rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+  font-family: 'Jost', sans-serif;
+}
+.print-btn:hover { background: var(--gold-pale); }
+
+.section-nav {
+  display: flex;
+  gap: 0.5rem;
+  margin-left: 0.5rem;
+}
+.nav-pill {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  padding: 0.4rem 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  font-family: 'Jost', sans-serif;
+}
+.nav-pill:hover, .nav-pill.active {
+  color: var(--gold-light);
+  border-color: rgba(184,150,90,0.4);
+  background: rgba(184,150,90,0.08);
+}
+
+/* ── SCREEN LAYOUT ──────────────────────────────────────── */
+.screen-wrapper {
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+}
+
+.piece-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.piece-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ── SHARED CARD CHROME ─────────────────────────────────── */
+/* 7 × 5 landscape: at 96dpi screen preview we show at natural size */
+.card {
+  width: 672px;   /* 7in × 96 */
+  height: 480px;  /* 5in × 96 */
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 48px rgba(0,0,0,0.25);
+}
+
+/* ── CARD FRONT ─────────────────────────────────────────── */
+.card-front {
+  background: var(--deep-forest);
+}
+
+/* Gradient atmosphere */
+.card-front::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 15% 50%, rgba(45,74,49,0.65) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 20%, rgba(184,150,90,0.1) 0%, transparent 45%),
+    radial-gradient(ellipse at 70% 80%, rgba(12,20,12,0.5) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* Rotating ornament circle */
+.front-ornament {
+  position: absolute;
+  top: 50%;
+  left: 38%;
+  transform: translate(-50%, -50%);
+  width: 380px;
+  height: 380px;
+  border: 1px solid rgba(184,150,90,0.07);
+  border-radius: 50%;
+  animation: slowspin 80s linear infinite;
+}
+.front-ornament::before {
+  content: '';
+  position: absolute;
+  inset: 28px;
+  border: 1px solid rgba(184,150,90,0.05);
+  border-radius: 50%;
+}
+.front-ornament::after {
+  content: '';
+  position: absolute;
+  inset: 56px;
+  border: 1px solid rgba(184,150,90,0.03);
+  border-radius: 50%;
+}
+@keyframes slowspin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+/* Double border */
+.card-border {
+  position: absolute;
+  inset: 14px;
+  border: 1px solid rgba(184,150,90,0.28);
+  pointer-events: none;
+}
+.card-border::after {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(184,150,90,0.1);
+}
+
+/* Corner brackets */
+.corners {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.corners::before, .corners::after,
+.corners span::before, .corners span::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+}
+/* top-left */
+.corners::before {
+  top: 22px; left: 22px;
+  border-top: 1.5px solid rgba(184,150,90,0.6);
+  border-left: 1.5px solid rgba(184,150,90,0.6);
+}
+/* top-right */
+.corners::after {
+  top: 22px; right: 22px;
+  border-top: 1.5px solid rgba(184,150,90,0.6);
+  border-right: 1.5px solid rgba(184,150,90,0.6);
+}
+/* bottom-left */
+.corners span::before {
+  bottom: 22px; left: 22px;
+  border-bottom: 1.5px solid rgba(184,150,90,0.6);
+  border-left: 1.5px solid rgba(184,150,90,0.6);
+}
+/* bottom-right */
+.corners span::after {
+  bottom: 22px; right: 22px;
+  border-bottom: 1.5px solid rgba(184,150,90,0.6);
+  border-right: 1.5px solid rgba(184,150,90,0.6);
+}
+
+/* Front left col — title block */
+.front-left {
+  position: absolute;
+  left: 52px;
+  top: 0;
+  bottom: 0;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0;
+}
+
+.front-eyebrow {
+  font-size: 7px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(184,150,90,0.75);
+  margin-bottom: 18px;
+}
+
+.front-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 72px;
+  font-weight: 300;
+  line-height: 0.88;
+  color: #fff;
+  margin-bottom: 4px;
+}
+.front-title em {
+  font-style: italic;
+  color: var(--gold-light);
+}
+
+.front-rule {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 18px 0 16px;
+}
+.front-rule-line {
+  height: 1px;
+  width: 50px;
+  background: rgba(184,150,90,0.35);
+}
+.front-rule-diamond {
+  width: 5px;
+  height: 5px;
+  background: var(--gold);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+.front-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 12.5px;
+  font-style: italic;
+  font-weight: 300;
+  color: rgba(255,255,255,0.42);
+  line-height: 1.5;
+  max-width: 250px;
+}
+
+/* Front right col — recipient + details */
+.front-right {
+  position: absolute;
+  right: 44px;
+  top: 0;
+  bottom: 0;
+  width: 230px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-left: 1px solid rgba(184,150,90,0.15);
+  padding-left: 28px;
+}
+
+.front-to-label {
+  font-size: 6.5px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(184,150,90,0.6);
+  margin-bottom: 8px;
+}
+
+.front-recipient {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 300;
+  font-style: italic;
+  color: #fff;
+  line-height: 1.2;
+  margin-bottom: 20px;
+  min-height: 28px;
+}
+
+.front-detail-block {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.front-detail-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.front-detail-icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  opacity: 0.55;
+}
+.front-detail-text {
+  font-size: 8px;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.5);
+  font-weight: 300;
+  letter-spacing: 0.04em;
+}
+.front-detail-text strong {
+  color: rgba(255,255,255,0.75);
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  font-size: 7px;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.front-url-box {
+  border: 1px solid rgba(184,150,90,0.4);
+  background: rgba(184,150,90,0.06);
+  padding: 8px 12px;
+  text-align: center;
+}
+.front-url-label {
+  font-size: 6px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(184,150,90,0.6);
+  margin-bottom: 4px;
+}
+.front-url {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px;
+  color: var(--gold-light);
+  letter-spacing: 0.06em;
+}
+
+/* ── CARD BACK ──────────────────────────────────────────── */
+.card-back {
+  background: var(--cream);
+}
+
+.card-back::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(45,74,49,0.12) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 100%, rgba(184,150,90,0.08) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* Back uses same border/corners but dark gold */
+.card-back .card-border {
+  border-color: rgba(184,150,90,0.35);
+}
+.card-back .card-border::after { border-color: rgba(184,150,90,0.13); }
+.card-back .corners::before,
+.card-back .corners::after,
+.card-back .corners span::before,
+.card-back .corners span::after {
+  border-color: rgba(184,150,90,0.55) !important;
+}
+
+/* Left panel: monogram + estate name */
+.back-left {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 180px;
+  background: var(--deep-forest);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
+
+.back-left::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(45,74,49,0.7) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.back-monogram {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 64px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.85);
+  line-height: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.back-mono-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+  border: 1px solid rgba(184,150,90,0.2);
+  border-radius: 50%;
+}
+.back-mono-ring::after {
+  content: '';
+  position: absolute;
+  inset: -12px;
+  border: 1px solid rgba(184,150,90,0.1);
+  border-radius: 50%;
+}
+
+.back-estate-name {
+  font-size: 6.5px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(184,150,90,0.55);
+  position: relative;
+  z-index: 1;
+  margin-top: 14px;
+  text-align: center;
+}
+
+.back-gold-rule-v {
+  position: absolute;
+  right: 0;
+  top: 30px;
+  bottom: 30px;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, rgba(184,150,90,0.3), transparent);
+}
+
+/* Right panel: invitation copy */
+.back-right {
+  position: absolute;
+  left: 196px;
+  right: 36px;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 36px 20px 36px 0;
+}
+
+.back-small-label {
+  font-size: 7px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.back-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 300;
+  color: var(--deep-forest);
+  line-height: 1.15;
+  margin-bottom: 6px;
+}
+.back-headline em {
+  font-style: italic;
+  color: var(--forest);
+}
+
+.back-sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.back-rule {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 14px;
+}
+.back-rule-line { flex: 1; height: 1px; background: var(--border); }
+.back-rule-diamond {
+  width: 4px; height: 4px;
+  background: var(--gold);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+.back-body {
+  font-size: 8.5px;
+  font-weight: 300;
+  line-height: 1.85;
+  color: var(--muted);
+  margin-bottom: 16px;
+  max-width: 360px;
+}
+
+.rooms-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+.room-pill {
+  font-size: 6px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  padding: 3px 8px;
+}
+
+.back-url-area {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.back-url-label {
+  font-size: 6.5px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.back-url {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--deep-forest);
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.back-url::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+  max-width: 80px;
+}
+
+/* ── ENVELOPE ───────────────────────────────────────────── */
+/* 7 × 5 landscape: 672 × 480px at 96dpi */
+.envelope {
+  width: 672px;
+  height: 480px;
+  background: #fff;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 48px rgba(0,0,0,0.18);
+}
+
+/* Subtle cream atmosphere */
+.envelope::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(245,240,232,0.7) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 100%, rgba(184,150,90,0.04) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* V-flap at top */
+.env-flap {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 160px;
+  background: linear-gradient(to bottom, rgba(245,240,232,0.55) 0%, transparent 100%);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+.env-flap-line {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 160px;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  box-shadow: inset 0 0 0 1px rgba(184,150,90,0.18);
+}
+
+/* Diamond wax-seal at flap point */
+.env-flap-seal {
+  position: absolute;
+  top: 147px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 18px;
+  height: 18px;
+  background: var(--cream);
+  border: 1px solid rgba(184,150,90,0.4);
+}
+.env-flap-seal::after {
+  content: 'H';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 9px;
+  color: var(--gold);
+  transform: rotate(-45deg);
+  line-height: 18px;
+  text-align: center;
+  width: 100%;
+}
+
+/* Thin double gold border */
+.env-border {
+  position: absolute;
+  inset: 16px;
+  border: 1px solid rgba(184,150,90,0.22);
+  pointer-events: none;
+}
+.env-border::after {
+  content: '';
+  position: absolute;
+  inset: 7px;
+  border: 1px solid rgba(184,150,90,0.09);
+}
+
+/* Corner brackets */
+.env-corners {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.env-corners::before, .env-corners::after,
+.env-corners span::before, .env-corners span::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+}
+.env-corners::before {
+  top: 24px; left: 24px;
+  border-top: 1px solid rgba(184,150,90,0.5);
+  border-left: 1px solid rgba(184,150,90,0.5);
+}
+.env-corners::after {
+  top: 24px; right: 24px;
+  border-top: 1px solid rgba(184,150,90,0.5);
+  border-right: 1px solid rgba(184,150,90,0.5);
+}
+.env-corners span::before {
+  bottom: 24px; left: 24px;
+  border-bottom: 1px solid rgba(184,150,90,0.5);
+  border-left: 1px solid rgba(184,150,90,0.5);
+}
+.env-corners span::after {
+  bottom: 24px; right: 24px;
+  border-bottom: 1px solid rgba(184,150,90,0.5);
+  border-right: 1px solid rgba(184,150,90,0.5);
+}
+
+/* ── RETURN ADDRESS — top left ── */
+.env-return {
+  position: absolute;
+  top: 28px;
+  left: 32px;
+}
+/* "Hog" in upright serif + "swartz" italic gold — same split treatment */
+.env-return-logo {
+  line-height: 1;
+  margin-bottom: 5px;
+}
+.env-return-hog {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--deep-forest);
+  letter-spacing: 0.01em;
+}
+.env-return-swartz {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--gold);
+  letter-spacing: 0.01em;
+}
+.env-return-addr {
+  font-family: 'Jost', sans-serif;
+  font-size: 7.5px;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.7;
+  letter-spacing: 0.04em;
+}
+
+/* ── STAMP — top right ── */
+.env-stamp {
+  position: absolute;
+  top: 26px;
+  right: 30px;
+  width: 52px;
+  height: 64px;
+  border: 1.5px solid rgba(184,150,90,0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 7.5px;
+  font-style: italic;
+  color: rgba(184,150,90,0.38);
+  text-align: center;
+  line-height: 1.5;
+  background: rgba(245,240,232,0.25);
+}
+.env-stamp::before {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border: 1px dashed rgba(184,150,90,0.18);
+}
+
+/* ── CENTER — guest name + address lines ── */
+.env-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -44%);
+  text-align: center;
+  width: 400px;
+}
+
+.env-center-label {
+  font-family: 'Jost', sans-serif;
+  font-size: 6.5px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: rgba(184,150,90,0.6);
+  margin-bottom: 10px;
+}
+
+.env-center-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--deep-forest);
+  line-height: 1.15;
+  margin-bottom: 18px;
+  min-height: 34px;
+}
+
+.env-addr-text {
+  font-family: 'Jost', sans-serif;
+  font-size: 9px;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.9;
+  letter-spacing: 0.06em;
+  text-align: center;
+}
+
+/* ── PRINT STYLES ───────────────────────────────────────── */
+@media print {
+  @page { margin: 0; size: auto; }
+  body { background: white !important; }
+  .editor-bar { display: none !important; }
+  .screen-wrapper { padding: 0; gap: 0; background: white; }
+  .piece-label { display: none; }
+  .piece-wrap { break-inside: avoid; page-break-after: always; }
+  .piece-wrap:last-child { page-break-after: auto; }
+  .card, .envelope {
+    box-shadow: none;
+    /* Scale to fit page */
+    transform-origin: top left;
+  }
+  /* Cards at 7×5: target roughly letter landscape */
+  .card { width: 7in; height: 5in; }
+  .card .front-title { font-size: 80px; }
+
+  /* Envelope: 7×5 landscape */
+  .envelope { width: 7in; height: 5in; }
+
+  /* Scale font-sizes proportionally for print */
+  .card-front .front-title { font-size: 80px; }
+}
+
+/* ── SCREEN SCALE HINT ──────────────────────────────────── */
+.scale-note {
+  font-size: 0.65rem;
+  color: var(--muted);
+  text-align: center;
+  margin-top: -1.5rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.08em;
+}
+
+</style>
+</head>
+<body>
+
+<!-- ── EDITOR BAR ── -->
+<div class="editor-bar">
+  <span class="editor-logo">Hogswartz</span>
+  <span class="editor-label">Guest Name</span>
+  <input class="editor-input" id="nameInput" type="text" placeholder="e.g. Sarah & James" value="Dear Guest" maxlength="40">
+  <span class="editor-label">Address</span>
+  <input class="editor-input" id="addrInput" type="text" placeholder="e.g. 123 Main St, Chicago IL" value="123 Main Street, Springfield, IL 62701" maxlength="80" style="width:280px;">
+  <div class="section-nav">
+    <button class="nav-pill active" onclick="scrollTo('invite-section')">Invitation</button>
+    <button class="nav-pill" onclick="scrollTo('envelope-section')">Envelope</button>
+  </div>
+  <button class="print-btn" onclick="window.print()">🖨 Print All</button>
+</div>
+
+<div class="screen-wrapper">
+
+  <!-- ── INVITATION FRONT ── -->
+  <div class="piece-wrap" id="invite-section">
+    <p class="piece-label">Invitation — Front (7 × 5 in, Landscape)</p>
+    <div class="card card-front">
+      <div class="front-ornament"></div>
+      <div class="card-border"></div>
+      <div class="corners"><span></span></div>
+
+      <!-- Left: Title block -->
+      <div class="front-left">
+        <div class="front-eyebrow">A Swartz Estate Weekend</div>
+        <div class="front-title">Hog<em>swartz</em></div>
+        <div class="front-rule">
+          <div class="front-rule-line"></div>
+          <div class="front-rule-diamond"></div>
+          <div class="front-rule-line"></div>
+        </div>
+        <div class="front-subtitle">Where enchantment meets<br>extraordinary hospitality</div>
+      </div>
+
+      <!-- Right: Recipient + info -->
+      <div class="front-right">
+        <div class="front-to-label">Presented To</div>
+        <div class="front-recipient" id="displayName">Dear Guest</div>
+
+        <div class="front-detail-block">
+          <div class="front-detail-item">
+            <!-- House icon -->
+            <svg class="front-detail-icon" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 6.5L7 1.5L13 6.5V13H9.5V9.5H4.5V13H1V6.5Z" stroke="rgba(212,176,122,0.9)" stroke-width="1" fill="none" stroke-linejoin="round"/>
+            </svg>
+            <div class="front-detail-text">
+              <strong>The Estate</strong>
+              4610 Scottdale Rd<br>Saint Joseph, MI
+            </div>
+          </div>
+          <div class="front-detail-item">
+            <!-- Bed icon -->
+            <svg class="front-detail-icon" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="1" y="6" width="12" height="5" rx="1" stroke="rgba(212,176,122,0.9)" stroke-width="1"/>
+              <path d="M1 9V3.5C1 3 1.5 3 1.5 3H4.5V6" stroke="rgba(212,176,122,0.9)" stroke-width="1" stroke-linecap="round"/>
+              <rect x="5" y="4" width="8" height="2" rx="0.5" stroke="rgba(212,176,122,0.9)" stroke-width="1"/>
+              <line x1="1" y1="12" x2="1" y2="11" stroke="rgba(212,176,122,0.9)" stroke-width="1" stroke-linecap="round"/>
+              <line x1="13" y1="12" x2="13" y2="11" stroke="rgba(212,176,122,0.9)" stroke-width="1" stroke-linecap="round"/>
+            </svg>
+            <div class="front-detail-text">
+              <strong>Five Chambers</strong>
+              Each uniquely appointed<br>for the discerning guest
+            </div>
+          </div>
+          <div class="front-detail-item">
+            <!-- Key icon -->
+            <svg class="front-detail-icon" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="5" cy="5.5" r="3" stroke="rgba(212,176,122,0.9)" stroke-width="1"/>
+              <path d="M7.5 7.5L13 13" stroke="rgba(212,176,122,0.9)" stroke-width="1" stroke-linecap="round"/>
+              <path d="M10.5 10.5L12 9" stroke="rgba(212,176,122,0.9)" stroke-width="1" stroke-linecap="round"/>
+            </svg>
+            <div class="front-detail-text">
+              <strong>Exclusive Weekend</strong>
+              Private estate — your group<br>has the entire property
+            </div>
+          </div>
+        </div>
+
+        <div class="front-url-box">
+          <div class="front-url-label">Reserve Your Chamber</div>
+          <div class="front-url">hogswartz.com</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── INVITATION BACK ── -->
+  <div class="piece-wrap">
+    <p class="piece-label">Invitation — Back (print on reverse side)</p>
+    <div class="card card-back">
+      <div class="card-border"></div>
+      <div class="corners"><span></span></div>
+
+      <!-- Left dark panel -->
+      <div class="back-left">
+        <div class="back-mono-ring"></div>
+        <div class="back-monogram">H</div>
+        <div class="back-estate-name">Swartz<br>Estate</div>
+        <div class="back-gold-rule-v"></div>
+      </div>
+
+      <!-- Right copy panel -->
+      <div class="back-right">
+        <div class="back-small-label">You Are Cordially Invited</div>
+        <div class="back-headline">An Enchanted<br><em>Weekend Awaits</em></div>
+        <div class="back-sub">at Hogswartz, Saint Joseph, MI</div>
+
+        <div class="back-rule">
+          <div class="back-rule-line"></div>
+          <div class="back-rule-diamond"></div>
+          <div class="back-rule-line"></div>
+        </div>
+
+        <div class="back-body">
+          Five legendary chambers await at our private estate — each one
+          a world of its own, appointed with the finest in luxury and comfort.
+          The Swartz family invites you to secure your room for a weekend of
+          indulgence, laughter, and memories that will last a lifetime.
+          Artisan breakfast each morning, evening wine hour, nightly turndown
+          service, and the entire estate exclusively yours.
+        </div>
+
+        <div class="rooms-row">
+          <span class="room-pill">The Emerald Chamber</span>
+          <span class="room-pill">The Amber Suite</span>
+          <span class="room-pill">The Midnight Loft</span>
+          <span class="room-pill">The Sapphire Wing</span>
+          <span class="room-pill">The Crimson Parlour Suite</span>
+        </div>
+
+        <div class="back-url-area">
+          <div class="back-url-label">Book Your Stay</div>
+          <div class="back-url">hogswartz.com</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ENVELOPE ── -->
+  <div class="piece-wrap" id="envelope-section">
+    <p class="piece-label">Envelope — 7 × 5 in Landscape</p>
+    <div class="envelope">
+      <div class="env-flap"></div>
+      <div class="env-flap-line"></div>
+      <div class="env-flap-seal"></div>
+      <div class="env-border"></div>
+      <div class="env-corners"><span></span></div>
+
+      <!-- Return address — top left, Hog/swartz split treatment -->
+      <div class="env-return">
+        <div class="env-return-logo">
+          <span class="env-return-hog">Hog</span><span class="env-return-swartz">swartz</span>
+        </div>
+        <div class="env-return-addr">
+          4610 Scottdale Rd<br>
+          Saint Joseph, MI
+        </div>
+      </div>
+
+      <!-- Stamp — top right -->
+      <div class="env-stamp">Place<br>Stamp<br>Here</div>
+
+      <!-- Center: guest name + address -->
+      <div class="env-center">
+        <div class="env-center-label">To</div>
+        <div class="env-center-name" id="envName">Dear Guest</div>
+        <div class="env-addr-text" id="envAddr">123 Main Street<br>Springfield, IL 62701</div>
+      </div>
+
+    </div>
+  </div>
+
+  <p class="scale-note">Screen preview — actual print dimensions: Invitation 7×5 in landscape · Envelope 7×5 in landscape · Click "Print All" to print</p>
+
+</div><!-- /screen-wrapper -->
+
+<script>
+  const nameInput  = document.getElementById('nameInput');
+  const addrInput  = document.getElementById('addrInput');
+  const displayName = document.getElementById('displayName');
+  const envName     = document.getElementById('envName');
+  const envAddr     = document.getElementById('envAddr');
+
+  nameInput.addEventListener('input', () => {
+    const val = nameInput.value.trim() || 'Dear Guest';
+    displayName.textContent = val;
+    envName.textContent = val;
+  });
+
+  addrInput.addEventListener('input', () => {
+    const val = addrInput.value.trim() || '123 Main Street, Springfield, IL 62701';
+    // Split on comma for two-line display if possible
+    const parts = val.split(',');
+    if (parts.length >= 2) {
+      const street = parts[0].trim();
+      const rest = parts.slice(1).join(',').trim();
+      envAddr.innerHTML = street + '<br>' + rest;
+    } else {
+      envAddr.textContent = val;
+    }
+  });
+
+  function scrollTo(id) {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('active'));
+    event.target.classList.add('active');
+  }
+</script>
+</body>
+</html>
