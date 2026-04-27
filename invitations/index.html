@@ -856,6 +856,45 @@ body {
   letter-spacing: 0.08em;
 }
 
+/* ── RESPONSIVE ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .editor-bar {
+    padding: 0.8rem 1rem;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.6rem;
+  }
+  .editor-bar > .editor-logo {
+    text-align: center;
+  }
+  .editor-input {
+    width: 100% !important;
+  }
+  .section-nav {
+    margin-left: 0;
+    justify-content: center;
+  }
+  .print-btn {
+    margin-left: 0;
+    width: 100%;
+    text-align: center;
+  }
+  .screen-wrapper {
+    padding: 1.5rem 0.5rem;
+    gap: 2rem;
+  }
+  .piece-wrap {
+    width: 100%;
+  }
+  .piece-label {
+    font-size: 0.5rem;
+  }
+  .scale-note {
+    font-size: 0.55rem;
+    padding: 0 0.5rem;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1069,6 +1108,34 @@ body {
     document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('active'));
     event.target.classList.add('active');
   }
+
+  // Scale cards to fit viewport on narrow screens
+  function scaleCards() {
+    const cards = document.querySelectorAll('.card, .envelope');
+    cards.forEach(card => {
+      const wrap = card.closest('.piece-wrap');
+      const wrapperParent = wrap.parentElement;
+      const availableWidth = wrapperParent.clientWidth - 16;
+      const naturalWidth = 672;
+      const naturalHeight = 480;
+      if (availableWidth < naturalWidth) {
+        const scale = availableWidth / naturalWidth;
+        card.style.transform = `scale(${scale})`;
+        card.style.transformOrigin = 'top center';
+        card.style.width = naturalWidth + 'px';
+        card.style.height = naturalHeight + 'px';
+        // Collapse the unused layout space below the scaled card
+        card.style.marginBottom = -(naturalHeight * (1 - scale)) + 'px';
+      } else {
+        card.style.transform = '';
+        card.style.width = '';
+        card.style.height = '';
+        card.style.marginBottom = '';
+      }
+    });
+  }
+  scaleCards();
+  window.addEventListener('resize', scaleCards);
 </script>
 </body>
 </html>
