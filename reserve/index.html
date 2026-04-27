@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reserve Your Chamber — Hogswartz</title>
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F5F0E8;
+    --warm-white: #FAF7F2;
+    --deep-forest: #1C2B1E;
+    --forest: #2D4A31;
+    --gold: #B8965A;
+    --gold-light: #D4B07A;
+    --gold-pale: #EDD9A3;
+    --charcoal: #2A2A2A;
+    --muted: #7A7060;
+    --border: rgba(184,150,90,0.25);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--warm-white);
+    color: var(--charcoal);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 4rem;
+    background: transparent;
+    transition: background 0.5s, backdrop-filter 0.5s;
+  }
+  nav.scrolled {
+    background: rgba(28,43,30,0.92);
+    backdrop-filter: blur(12px);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 300;
+    letter-spacing: 0.12em;
+    color: var(--gold-light);
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold-light); }
+  .nav-links a.active { color: var(--gold-light); }
+
+  /* RESERVE HERO */
+  .reserve-hero {
+    position: relative;
+    min-height: 50vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: var(--deep-forest);
+    padding: 8rem 2rem 5rem;
+  }
+  .reserve-hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(45,74,49,0.6) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(184,150,90,0.12) 0%, transparent 50%),
+      linear-gradient(160deg, #0d1a0e 0%, #1C2B1E 40%, #243322 100%);
+  }
+  .reserve-hero-ornament {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(700px, 90vw);
+    height: min(700px, 90vw);
+    border: 1px solid rgba(184,150,90,0.06);
+    border-radius: 50%;
+    animation: rotate 60s linear infinite;
+  }
+  @keyframes rotate { to { transform: translate(-50%, -50%) rotate(360deg); } }
+  .reserve-hero-content {
+    position: relative;
+    text-align: center;
+    animation: fadeUp 1.2s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .reserve-eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+  .reserve-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    font-weight: 300;
+    line-height: 1;
+    color: #fff;
+    letter-spacing: -0.01em;
+    margin-bottom: 1rem;
+  }
+  .reserve-title em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+  .reserve-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(0.95rem, 2vw, 1.25rem);
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.06em;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  .reserve-divider {
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+    margin: 2rem auto 0;
+  }
+
+  /* GOLD RULE */
+  .gold-rule {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+  .gold-rule::before, .gold-rule::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .gold-rule-diamond {
+    width: 6px;
+    height: 6px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  /* FORM SECTION */
+  .reserve-section {
+    padding: 5rem 4rem 6rem;
+    background: var(--cream);
+  }
+  .reserve-form-container {
+    max-width: 820px;
+    margin: 0 auto;
+  }
+  .form-intro {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  .form-intro-text {
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--muted);
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.8rem 2.5rem;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .form-group.full-width {
+    grid-column: 1 / -1;
+  }
+  .form-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .form-label .required {
+    color: var(--gold);
+    margin-left: 0.2em;
+  }
+  .form-input,
+  .form-select,
+  .form-textarea {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: var(--charcoal);
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    padding: 0.9rem 1.1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 0;
+  }
+  .form-input:focus,
+  .form-select:focus,
+  .form-textarea:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(184,150,90,0.1);
+  }
+  .form-input::placeholder,
+  .form-textarea::placeholder {
+    color: rgba(122,112,96,0.5);
+    font-weight: 200;
+  }
+  .form-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23B8965A' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1.1rem center;
+    padding-right: 2.8rem;
+    cursor: pointer;
+  }
+  .form-select option {
+    font-family: 'Jost', sans-serif;
+  }
+  .form-textarea {
+    resize: vertical;
+    min-height: 110px;
+    line-height: 1.7;
+  }
+
+  /* DATE/TIME PAIR */
+  .datetime-pair {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 0.8rem;
+  }
+
+  /* SUBMIT */
+  .form-actions {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding-top: 1rem;
+  }
+  .form-submit {
+    display: inline-block;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--deep-forest);
+    background: var(--gold-light);
+    border: none;
+    padding: 1.2rem 3.5rem;
+    cursor: pointer;
+    transition: background 0.3s, letter-spacing 0.3s;
+  }
+  .form-submit:hover {
+    background: var(--gold-pale);
+    letter-spacing: 0.35em;
+  }
+  .form-submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* SUCCESS STATE */
+  .form-success {
+    display: none;
+    text-align: center;
+    padding: 4rem 2rem;
+    animation: fadeUp 0.8s ease both;
+  }
+  .form-success.visible {
+    display: block;
+  }
+  .success-icon {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+  .success-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    color: var(--deep-forest);
+    line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+  .success-title em {
+    font-style: italic;
+    color: var(--forest);
+  }
+  .success-text {
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--muted);
+    max-width: 440px;
+    margin: 0 auto 2.5rem;
+  }
+  .success-link {
+    display: inline-block;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--deep-forest);
+    border-bottom: 1px solid var(--gold);
+    padding-bottom: 0.3rem;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .success-link:hover {
+    color: var(--gold);
+  }
+
+  /* VALIDATION ERROR */
+  .form-input.error,
+  .form-select.error,
+  .form-textarea.error {
+    border-color: #a04040;
+  }
+  .form-error {
+    font-size: 0.7rem;
+    color: #a04040;
+    font-weight: 300;
+    display: none;
+  }
+  .form-error.visible {
+    display: block;
+  }
+
+  /* FOOTER */
+  footer {
+    background: #0D1A0E;
+    padding: 4rem;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 2rem;
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    color: var(--gold-light);
+    letter-spacing: 0.1em;
+  }
+  .footer-tagline {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.2);
+    margin-top: 0.3rem;
+  }
+  .footer-center {
+    text-align: center;
+  }
+  .footer-ornament {
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+    margin: 0 auto 1.5rem;
+  }
+  .footer-legal {
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.2);
+    text-align: right;
+  }
+
+  /* ─── RESPONSIVE ─────────────────────────────── */
+
+  @media (max-width: 768px) {
+    nav {
+      padding: 1.2rem 1.5rem;
+    }
+    .nav-links {
+      display: none;
+    }
+    .reserve-hero {
+      padding: 7rem 1.5rem 3.5rem;
+      min-height: 40vh;
+    }
+    .reserve-section {
+      padding: 3.5rem 1.5rem 4rem;
+    }
+    .form-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    .form-group.full-width {
+      grid-column: auto;
+    }
+    .datetime-pair {
+      grid-template-columns: 1fr 1fr;
+    }
+    footer {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      padding: 3rem 1.5rem;
+      text-align: center;
+    }
+    .footer-center { order: -1; }
+    .footer-ornament { display: none; }
+    .footer-legal { text-align: center; }
+  }
+
+  @media (max-width: 420px) {
+    .reserve-title { font-size: clamp(2.5rem, 14vw, 3.5rem); }
+    .datetime-pair {
+      grid-template-columns: 1fr;
+    }
+    .form-submit {
+      width: 100%;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="/" class="nav-logo">Hogswartz</a>
+  <ul class="nav-links">
+    <li><a href="/#rooms">Rooms</a></li>
+    <li><a href="/#experience">Experiences</a></li>
+    <li><a href="/#breakfast">Dining</a></li>
+    <li><a href="/reserve" class="active">Reserve</a></li>
+  </ul>
+</nav>
+
+<!-- RESERVE HERO -->
+<section class="reserve-hero">
+  <div class="reserve-hero-bg"></div>
+  <div class="reserve-hero-ornament"></div>
+  <div class="reserve-hero-content">
+    <p class="reserve-eyebrow">Begin Your Stay</p>
+    <h1 class="reserve-title">Reserve Your<br><em>Chamber</em></h1>
+    <p class="reserve-subtitle">Choose your sanctuary, tell us your wishes, and we shall prepare everything for your arrival.</p>
+    <div class="reserve-divider"></div>
+  </div>
+</section>
+
+<!-- FORM SECTION -->
+<section class="reserve-section">
+  <div class="reserve-form-container">
+
+    <div class="form-intro">
+      <div class="gold-rule"><div class="gold-rule-diamond"></div></div>
+      <p class="form-intro-text">Please complete the details below. Our estate concierge will confirm your reservation and attend to any special arrangements.</p>
+    </div>
+
+    <!-- TODO: Replace action URL with your Google Form's action URL -->
+    <!-- Find it in the pre-filled link: https://docs.google.com/forms/d/e/FORM_ID/formResponse -->
+    <form id="reserveForm" action="https://docs.google.com/forms/d/e/REPLACE_WITH_FORM_ID/formResponse" method="POST" target="hidden_iframe" novalidate>
+
+      <div class="form-grid">
+
+        <!-- Full Name -->
+        <div class="form-group">
+          <label class="form-label" for="fullName">Full Name <span class="required">*</span></label>
+          <!-- TODO: Replace entry.XXXXXXXXXX with your Google Form's entry ID for Full Name -->
+          <input type="text" id="fullName" name="entry.REPLACE_FULLNAME" class="form-input" placeholder="Your full name" required>
+          <span class="form-error" data-for="fullName">Please enter your name</span>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label class="form-label" for="email">Email <span class="required">*</span></label>
+          <!-- TODO: Replace entry.XXXXXXXXXX with your Google Form's entry ID for Email -->
+          <input type="email" id="email" name="entry.REPLACE_EMAIL" class="form-input" placeholder="your@email.com" required>
+          <span class="form-error" data-for="email">Please enter a valid email</span>
+        </div>
+
+        <!-- Arrival Date & Time -->
+        <div class="form-group">
+          <label class="form-label" for="arrivalDate">Arrival <span class="required">*</span></label>
+          <div class="datetime-pair">
+            <!-- TODO: Replace entry.XXXXXXXXXX with your Google Form's entry ID for Arrival -->
+            <input type="date" id="arrivalDate" name="entry.REPLACE_ARRIVAL" class="form-input" required>
+            <input type="time" id="arrivalTime" class="form-input" value="15:00">
+          </div>
+          <span class="form-error" data-for="arrivalDate">Please select an arrival date</span>
+        </div>
+
+        <!-- Departure Date & Time -->
+        <div class="form-group">
+          <label class="form-label" for="departureDate">Departure <span class="required">*</span></label>
+          <div class="datetime-pair">
+            <!-- TODO: Replace entry.XXXXXXXXXX with your Google Form's entry ID for Departure -->
+            <input type="date" id="departureDate" name="entry.REPLACE_DEPARTURE" class="form-input" required>
+            <input type="time" id="departureTime" class="form-input" value="12:00">
+          </div>
+          <span class="form-error" data-for="departureDate">Please select a departure date</span>
+        </div>
+
+        <!-- Preferred Chamber -->
+        <div class="form-group full-width">
+          <label class="form-label" for="chamber">Preferred Chamber <span class="required">*</span></label>
+          <!-- TODO: Replace entry.XXXXXXXXXX with your Google Form's entry ID for Preferred Chamber -->
+          <select id="chamber" name="entry.REPLACE_CHAMBER" class="form-select" required>
+            <option value="" disabled selected>Select your chamber…</option>
+            <option value="The Emerald Chamber">The Emerald Chamber — King Canopy, Garden View</option>
+            <option value="The Amber Suite">The Amber Suite — Queen Sleigh, Fireplace Nook</option>
+            <option value="The Midnight Loft">The Midnight Loft — King Platform, Celestial Canopy</option>
+            <option value="The Sapphire Wing">The Sapphire Wing — Twin Queens, Espresso Station</option>
+            <option value="The Crimson Parlour Suite">The Crimson Parlour Suite — Grand King, Private Sitting Room</option>
+          </select>
+          <span class="form-error" data-for="chamber">Please choose a chamber</span>
+        </div>
+
+        <!-- Food Allergies -->
+        <div class="form-group full-width">
+          <label class="form-label" for="allergies">Food Allergies / Dietary Requests</label>
+          <!-- TODO: Replace entry.XXXXXXXXXX with your Google Form's entry ID for Allergies -->
+          <textarea id="allergies" name="entry.REPLACE_ALLERGIES" class="form-textarea" placeholder="Any allergies, dietary restrictions, or breakfast preferences we should know about…"></textarea>
+        </div>
+
+        <!-- Special Requests -->
+        <div class="form-group full-width">
+          <label class="form-label" for="requests">Special Requests</label>
+          <!-- TODO: Replace entry.XXXXXXXXXX with your Google Form's entry ID for Special Requests -->
+          <textarea id="requests" name="entry.REPLACE_REQUESTS" class="form-textarea" placeholder="Extra pillows, late arrival, bringing a pet dragon…"></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="form-submit" id="submitBtn">Reserve My Chamber</button>
+        </div>
+
+      </div>
+    </form>
+
+    <!-- Success Message -->
+    <div class="form-success" id="formSuccess">
+      <span class="success-icon">✨</span>
+      <h2 class="success-title">Your Chamber <em>Awaits</em></h2>
+      <p class="success-text">Thank you — your reservation request has been received. Our estate concierge will be in touch shortly to confirm the details of your enchanted stay.</p>
+      <a href="/" class="success-link">Return to the Estate</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- Hidden iframe for Google Forms submission (prevents redirect) -->
+<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">Hogswartz</div>
+    <div class="footer-tagline">A Swartz Estate Weekend</div>
+  </div>
+  <div class="footer-center">
+    <div class="footer-ornament"></div>
+    <div style="font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(184,150,90,0.4);">Est. This Weekend</div>
+  </div>
+  <div class="footer-legal">
+    Where friends become<br>legendary guests
+  </div>
+</footer>
+
+<script>
+  // Nav scroll effect
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 80);
+  });
+
+  // Combine date + time into the hidden entry field value before submit
+  function combineDatetime(dateId, timeId) {
+    const d = document.getElementById(dateId).value;
+    const t = document.getElementById(timeId).value;
+    if (d && t) return d + ' ' + t;
+    if (d) return d;
+    return '';
+  }
+
+  // Form validation & submission
+  const form = document.getElementById('reserveForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const successDiv = document.getElementById('formSuccess');
+
+  form.addEventListener('submit', function(e) {
+    // Clear previous errors
+    form.querySelectorAll('.form-error').forEach(el => el.classList.remove('visible'));
+    form.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+
+    let valid = true;
+
+    // Validate required fields
+    const checks = [
+      { id: 'fullName', test: v => v.trim().length > 0 },
+      { id: 'email', test: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
+      { id: 'arrivalDate', test: v => v.length > 0 },
+      { id: 'departureDate', test: v => v.length > 0 },
+      { id: 'chamber', test: v => v.length > 0 }
+    ];
+
+    checks.forEach(({ id, test }) => {
+      const el = document.getElementById(id);
+      if (!test(el.value)) {
+        valid = false;
+        el.classList.add('error');
+        const err = form.querySelector(`.form-error[data-for="${id}"]`);
+        if (err) err.classList.add('visible');
+      }
+    });
+
+    if (!valid) {
+      e.preventDefault();
+      return;
+    }
+
+    // Combine date+time values into the date inputs before submission
+    const arrivalInput = document.getElementById('arrivalDate');
+    arrivalInput.value = combineDatetime('arrivalDate', 'arrivalTime');
+
+    const departureInput = document.getElementById('departureDate');
+    departureInput.value = combineDatetime('departureDate', 'departureTime');
+
+    // Disable button
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+
+    // Show success after a brief delay (form submits to hidden iframe)
+    setTimeout(() => {
+      form.style.display = 'none';
+      document.querySelector('.form-intro').style.display = 'none';
+      successDiv.classList.add('visible');
+      window.scrollTo({ top: successDiv.offsetTop - 120, behavior: 'smooth' });
+    }, 800);
+  });
+</script>
+</body>
+</html>
