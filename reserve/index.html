@@ -262,11 +262,137 @@
     line-height: 1.7;
   }
 
-  /* DATE/TIME PAIR */
-  .datetime-pair {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 0.8rem;
+  /* ITINERARY */
+  .itinerary-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 300;
+    color: var(--deep-forest);
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  .itinerary-details {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .itinerary-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .itinerary-item {
+    display: flex;
+    gap: 1.5rem;
+    align-items: baseline;
+  }
+  .itinerary-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    min-width: 70px;
+    flex-shrink: 0;
+  }
+  .itinerary-value {
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--charcoal);
+    line-height: 1.6;
+  }
+  .itinerary-schedule {
+    margin-top: 2rem;
+  }
+  .itinerary-schedule-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: var(--deep-forest);
+    margin-bottom: 1.2rem;
+    text-align: center;
+  }
+  .itinerary-day {
+    display: flex;
+    gap: 1.5rem;
+    align-items: baseline;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .itinerary-day:last-child {
+    border-bottom: none;
+  }
+  .itinerary-day-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    min-width: 70px;
+    flex-shrink: 0;
+    font-weight: 400;
+  }
+  .itinerary-day-desc {
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: var(--charcoal);
+  }
+
+  /* CHECKBOX GROUP */
+  .checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem 1.5rem;
+    padding: 0.5rem 0;
+  }
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: var(--charcoal);
+    cursor: pointer;
+    user-select: none;
+  }
+  .checkbox-label input[type="checkbox"],
+  .checkbox-label input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  .checkbox-custom {
+    width: 18px;
+    height: 18px;
+    border: 1px solid var(--border);
+    background: var(--warm-white);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .checkbox-label input[type="radio"] + .checkbox-custom {
+    border-radius: 50%;
+  }
+  .checkbox-label input[type="checkbox"]:checked + .checkbox-custom,
+  .checkbox-label input[type="radio"]:checked + .checkbox-custom {
+    border-color: var(--gold);
+    background: var(--gold-light);
+  }
+  .checkbox-label input[type="checkbox"]:checked + .checkbox-custom::after,
+  .checkbox-label input[type="radio"]:checked + .checkbox-custom::after {
+    content: '✓';
+    font-size: 0.7rem;
+    color: var(--deep-forest);
+    font-weight: 600;
+  }
+  .checkbox-label input[type="checkbox"]:focus + .checkbox-custom,
+  .checkbox-label input[type="radio"]:focus + .checkbox-custom {
+    box-shadow: 0 0 0 3px rgba(184,150,90,0.1);
+  }
+  .checkbox-note {
+    font-size: 0.8rem;
+    color: var(--muted);
   }
 
   /* SUBMIT */
@@ -426,9 +552,6 @@
     .form-group.full-width {
       grid-column: auto;
     }
-    .datetime-pair {
-      grid-template-columns: 1fr 1fr;
-    }
     footer {
       grid-template-columns: 1fr;
       gap: 1.5rem;
@@ -442,11 +565,16 @@
 
   @media (max-width: 420px) {
     .reserve-title { font-size: clamp(2.5rem, 14vw, 3.5rem); }
-    .datetime-pair {
-      grid-template-columns: 1fr;
-    }
     .form-submit {
       width: 100%;
+    }
+    .itinerary-item {
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .itinerary-day {
+      flex-direction: column;
+      gap: 0.3rem;
     }
   }
 </style>
@@ -476,64 +604,95 @@
   </div>
 </section>
 
+<!-- ITINERARY SECTION -->
+<section class="reserve-section" style="padding-bottom: 0;">
+  <div class="reserve-form-container">
+    <div class="form-intro">
+      <div class="gold-rule"><div class="gold-rule-diamond"></div></div>
+    </div>
+
+    <div class="itinerary-details">
+      <div class="itinerary-meta">
+        <div class="itinerary-item">
+          <span class="itinerary-label">When</span>
+          <span class="itinerary-value">Friday July 24 – Sunday July 26</span>
+        </div>
+        <div class="itinerary-item">
+          <span class="itinerary-label">Where</span>
+          <span class="itinerary-value">Hogswartz — 4610 Scottdale Rd. St Joseph, MI</span>
+        </div>
+      </div>
+
+      <div class="gold-rule"><div class="gold-rule-diamond"></div></div>
+
+      <div class="itinerary-schedule">
+        <h3 class="itinerary-schedule-title">Itinerary</h3>
+        <div class="itinerary-day">
+          <span class="itinerary-day-label">Friday</span>
+          <span class="itinerary-day-desc">Arrival and Settle In, Dinner &amp; Camaraderie</span>
+        </div>
+        <div class="itinerary-day">
+          <span class="itinerary-day-label">Saturday</span>
+          <span class="itinerary-day-desc">Beach &amp; Bonfire</span>
+        </div>
+        <div class="itinerary-day">
+          <span class="itinerary-day-label">Sunday</span>
+          <span class="itinerary-day-desc">Slow Start &amp; Departure</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- FORM SECTION -->
 <section class="reserve-section">
   <div class="reserve-form-container">
 
     <div class="form-intro">
       <div class="gold-rule"><div class="gold-rule-diamond"></div></div>
-      <p class="form-intro-text">Please complete the details below. Our estate concierge will confirm your reservation and attend to any special arrangements.</p>
+      <p class="form-intro-text">Please complete the details below to RSVP.</p>
     </div>
 
-    <!-- TODO: Replace action URL with your Google Form's action URL -->
-    <!-- Find it in the pre-filled link: https://docs.google.com/forms/d/e/FORM_ID/formResponse -->
-    <form id="reserveForm" action="https://docs.google.com/forms/d/e/REPLACE_WITH_FORM_ID/formResponse" method="POST" target="hidden_iframe" novalidate>
+    <form id="reserveForm" action="https://docs.google.com/forms/d/e/1FAIpQLSfnhcHo3_LKT3uaoSzm2nRPYC1pix9bMBBfDpZhpnlq5MxYJw/formResponse" method="POST" target="hidden_iframe" novalidate>
 
       <div class="form-grid">
 
         <!-- Full Name -->
         <div class="form-group">
-          <label class="form-label" for="fullName">Full Name <span class="required">*</span></label>
-          <!-- TODO: Replace entry.XXXXXXXXXX with your Google Form's entry ID for Full Name -->
-          <input type="text" id="fullName" name="entry.REPLACE_FULLNAME" class="form-input" placeholder="Your full name" required>
+          <label class="form-label" for="fullName">Name <span class="required">*</span></label>
+          <input type="text" id="fullName" name="entry.2092238618" class="form-input" placeholder="Your name" required>
           <span class="form-error" data-for="fullName">Please enter your name</span>
         </div>
 
         <!-- Email -->
         <div class="form-group">
           <label class="form-label" for="email">Email <span class="required">*</span></label>
-          <!-- TODO: Replace entry.XXXXXXXXXX with your Google Form's entry ID for Email -->
-          <input type="email" id="email" name="entry.REPLACE_EMAIL" class="form-input" placeholder="your@email.com" required>
+          <input type="email" id="email" name="entry.1556369182" class="form-input" placeholder="your@email.com" required>
           <span class="form-error" data-for="email">Please enter a valid email</span>
         </div>
 
-        <!-- Arrival Date & Time -->
-        <div class="form-group">
-          <label class="form-label" for="arrivalDate">Arrival <span class="required">*</span></label>
-          <div class="datetime-pair">
-            <!-- TODO: Replace entry.XXXXXXXXXX with your Google Form's entry ID for Arrival -->
-            <input type="date" id="arrivalDate" name="entry.REPLACE_ARRIVAL" class="form-input" required>
-            <input type="time" id="arrivalTime" class="form-input" value="15:00">
+        <!-- Will you attend? -->
+        <div class="form-group full-width">
+          <label class="form-label">Will you attend? <span class="required">*</span></label>
+          <div class="checkbox-group" id="attendGroup">
+            <label class="checkbox-label">
+              <input type="checkbox" name="entry.1753222212" value="Friday Night (Check in after 3pm)">
+              <span class="checkbox-custom"></span>
+              Friday Night <span class="checkbox-note">(Check in after 3pm)</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="entry.1753222212" value="Saturday Night">
+              <span class="checkbox-custom"></span>
+              Saturday Night
+            </label>
           </div>
-          <span class="form-error" data-for="arrivalDate">Please select an arrival date</span>
-        </div>
-
-        <!-- Departure Date & Time -->
-        <div class="form-group">
-          <label class="form-label" for="departureDate">Departure <span class="required">*</span></label>
-          <div class="datetime-pair">
-            <!-- TODO: Replace entry.XXXXXXXXXX with your Google Form's entry ID for Departure -->
-            <input type="date" id="departureDate" name="entry.REPLACE_DEPARTURE" class="form-input" required>
-            <input type="time" id="departureTime" class="form-input" value="12:00">
-          </div>
-          <span class="form-error" data-for="departureDate">Please select a departure date</span>
+          <span class="form-error" data-for="attendGroup">Please select at least one night</span>
         </div>
 
         <!-- Preferred Chamber -->
         <div class="form-group full-width">
-          <label class="form-label" for="chamber">Preferred Chamber <span class="required">*</span></label>
-          <!-- TODO: Replace entry.XXXXXXXXXX with your Google Form's entry ID for Preferred Chamber -->
-          <select id="chamber" name="entry.REPLACE_CHAMBER" class="form-select" required>
+          <label class="form-label" for="chamber">Preferred Chamber</label>
+          <select id="chamber" name="entry.REPLACE_CHAMBER" class="form-select">
             <option value="" disabled selected>Select your chamber…</option>
             <option value="The Emerald Chamber">The Emerald Chamber — King Canopy, Garden View</option>
             <option value="The Amber Suite">The Amber Suite — Queen Sleigh, Fireplace Nook</option>
@@ -541,25 +700,83 @@
             <option value="The Sapphire Wing">The Sapphire Wing — Twin Queens, Espresso Station</option>
             <option value="The Crimson Parlour Suite">The Crimson Parlour Suite — Grand King, Private Sitting Room</option>
           </select>
-          <span class="form-error" data-for="chamber">Please choose a chamber</span>
         </div>
 
-        <!-- Food Allergies -->
+        <!-- Dietary Restrictions (radio — single select in Google Form) -->
         <div class="form-group full-width">
-          <label class="form-label" for="allergies">Food Allergies / Dietary Requests</label>
-          <!-- TODO: Replace entry.XXXXXXXXXX with your Google Form's entry ID for Allergies -->
-          <textarea id="allergies" name="entry.REPLACE_ALLERGIES" class="form-textarea" placeholder="Any allergies, dietary restrictions, or breakfast preferences we should know about…"></textarea>
+          <label class="form-label">Dietary Restrictions / Allergies <span class="required">*</span></label>
+          <div class="checkbox-group" id="dietaryGroup">
+            <label class="checkbox-label">
+              <input type="radio" name="entry.588393791" value="None">
+              <span class="checkbox-custom"></span>
+              None
+            </label>
+            <label class="checkbox-label">
+              <input type="radio" name="entry.588393791" value="Vegetarian">
+              <span class="checkbox-custom"></span>
+              Vegetarian
+            </label>
+            <label class="checkbox-label">
+              <input type="radio" name="entry.588393791" value="Vegan">
+              <span class="checkbox-custom"></span>
+              Vegan
+            </label>
+            <label class="checkbox-label">
+              <input type="radio" name="entry.588393791" value="Gluten-free">
+              <span class="checkbox-custom"></span>
+              Gluten-free
+            </label>
+            <label class="checkbox-label">
+              <input type="radio" name="entry.588393791" value="__other_option__" id="dietaryOtherRadio">
+              <span class="checkbox-custom"></span>
+              Other
+            </label>
+          </div>
+          <input type="text" id="dietaryOther" name="entry.588393791.other_option_response" class="form-input" placeholder="Please specify…" style="margin-top: 0.5rem; display: none;">
+          <span class="form-error" data-for="dietaryGroup">Please select an option</span>
         </div>
 
-        <!-- Special Requests -->
+        <!-- Coffee/Caffeine Preference -->
         <div class="form-group full-width">
-          <label class="form-label" for="requests">Special Requests</label>
-          <!-- TODO: Replace entry.XXXXXXXXXX with your Google Form's entry ID for Special Requests -->
-          <textarea id="requests" name="entry.REPLACE_REQUESTS" class="form-textarea" placeholder="Extra pillows, late arrival, bringing a pet dragon…"></textarea>
+          <label class="form-label">Coffee / Caffeine Preference <span class="required">*</span></label>
+          <div class="checkbox-group" id="coffeeGroup">
+            <label class="checkbox-label">
+              <input type="checkbox" name="entry.310830418" value="None">
+              <span class="checkbox-custom"></span>
+              None
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="entry.310830418" value="Coffee">
+              <span class="checkbox-custom"></span>
+              Coffee
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="entry.310830418" value="Tea">
+              <span class="checkbox-custom"></span>
+              Tea
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="entry.310830418" value="Cream">
+              <span class="checkbox-custom"></span>
+              Cream
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="entry.310830418" value="Sugar">
+              <span class="checkbox-custom"></span>
+              Sugar
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="entry.310830418" value="__other_option__" id="coffeeOtherCheck">
+              <span class="checkbox-custom"></span>
+              Other
+            </label>
+          </div>
+          <input type="text" id="coffeeOther" name="entry.310830418.other_option_response" class="form-input" placeholder="Preferred brands/flavors…" style="margin-top: 0.5rem; display: none;">
+          <span class="form-error" data-for="coffeeGroup">Please select at least one option</span>
         </div>
 
         <div class="form-actions">
-          <button type="submit" class="form-submit" id="submitBtn">Reserve My Chamber</button>
+          <button type="submit" class="form-submit" id="submitBtn">RSVP</button>
         </div>
 
       </div>
@@ -568,8 +785,8 @@
     <!-- Success Message -->
     <div class="form-success" id="formSuccess">
       <span class="success-icon">✨</span>
-      <h2 class="success-title">Your Chamber <em>Awaits</em></h2>
-      <p class="success-text">Thank you — your reservation request has been received. Our estate concierge will be in touch shortly to confirm the details of your enchanted stay.</p>
+      <h2 class="success-title">You're <em>In</em></h2>
+      <p class="success-text">Thank you — your RSVP has been received. See you at Hogswartz for the Weekend in the Riviera!</p>
       <a href="/" class="success-link">Return to the Estate</a>
     </div>
 
@@ -601,14 +818,22 @@
     nav.classList.toggle('scrolled', window.scrollY > 80);
   });
 
-  // Combine date + time into the hidden entry field value before submit
-  function combineDatetime(dateId, timeId) {
-    const d = document.getElementById(dateId).value;
-    const t = document.getElementById(timeId).value;
-    if (d && t) return d + ' ' + t;
-    if (d) return d;
-    return '';
-  }
+  // Show/hide "Other" text fields
+  const dietaryOtherRadio = document.getElementById('dietaryOtherRadio');
+  const dietaryOtherInput = document.getElementById('dietaryOther');
+  document.querySelectorAll('input[name="entry.588393791"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      dietaryOtherInput.style.display = dietaryOtherRadio.checked ? 'block' : 'none';
+      if (!dietaryOtherRadio.checked) dietaryOtherInput.value = '';
+    });
+  });
+
+  const coffeeOtherCheck = document.getElementById('coffeeOtherCheck');
+  const coffeeOtherInput = document.getElementById('coffeeOther');
+  coffeeOtherCheck.addEventListener('change', () => {
+    coffeeOtherInput.style.display = coffeeOtherCheck.checked ? 'block' : 'none';
+    if (!coffeeOtherCheck.checked) coffeeOtherInput.value = '';
+  });
 
   // Form validation & submission
   const form = document.getElementById('reserveForm');
@@ -622,13 +847,10 @@
 
     let valid = true;
 
-    // Validate required fields
+    // Validate text/email fields
     const checks = [
       { id: 'fullName', test: v => v.trim().length > 0 },
-      { id: 'email', test: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
-      { id: 'arrivalDate', test: v => v.length > 0 },
-      { id: 'departureDate', test: v => v.length > 0 },
-      { id: 'chamber', test: v => v.length > 0 }
+      { id: 'email', test: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) }
     ];
 
     checks.forEach(({ id, test }) => {
@@ -641,17 +863,34 @@
       }
     });
 
+    // Validate attend checkboxes
+    const attendChecked = document.querySelectorAll('#attendGroup input[type="checkbox"]:checked');
+    if (attendChecked.length === 0) {
+      valid = false;
+      const err = form.querySelector('.form-error[data-for="attendGroup"]');
+      if (err) err.classList.add('visible');
+    }
+
+    // Validate dietary radio
+    const dietaryChecked = document.querySelector('input[name="entry.588393791"]:checked');
+    if (!dietaryChecked) {
+      valid = false;
+      const err = form.querySelector('.form-error[data-for="dietaryGroup"]');
+      if (err) err.classList.add('visible');
+    }
+
+    // Validate coffee checkboxes
+    const coffeeChecked = document.querySelectorAll('#coffeeGroup input[type="checkbox"]:checked');
+    if (coffeeChecked.length === 0) {
+      valid = false;
+      const err = form.querySelector('.form-error[data-for="coffeeGroup"]');
+      if (err) err.classList.add('visible');
+    }
+
     if (!valid) {
       e.preventDefault();
       return;
     }
-
-    // Combine date+time values into the date inputs before submission
-    const arrivalInput = document.getElementById('arrivalDate');
-    arrivalInput.value = combineDatetime('arrivalDate', 'arrivalTime');
-
-    const departureInput = document.getElementById('departureDate');
-    departureInput.value = combineDatetime('departureDate', 'departureTime');
 
     // Disable button
     submitBtn.disabled = true;
