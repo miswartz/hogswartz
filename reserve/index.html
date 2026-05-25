@@ -9,33 +9,35 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="manifest" href="/site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:wght@300;400;500&family=Dancing+Script:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --cream: #F5F0E8;
-    --warm-white: #FAF7F2;
-    --deep-forest: #1C2B1E;
-    --forest: #2D4A31;
-    --gold: #B8965A;
-    --gold-light: #D4B07A;
-    --gold-pale: #EDD9A3;
-    --charcoal: #2A2A2A;
-    --muted: #7A7060;
-    --border: rgba(184,150,90,0.25);
+    --sand:           #F5EDD8;
+    --sand-light:     #FAF7EE;
+    --ocean:          #4A8FA8;
+    --ocean-light:    #7BB3C8;
+    --sun:            #C97D45;
+    --sun-light:      #E09A60;
+    --sun-pale:       #F5D4A0;
+    --driftwood:      #8C7355;
+    --driftwood-light:#A89070;
+    --charcoal:       #2E2820;
+    --border:         rgba(74,143,168,0.2);
+    --white:          #FFFFFF;
   }
 
   html { scroll-behavior: smooth; }
 
   body {
-    font-family: 'Jost', sans-serif;
-    background: var(--warm-white);
+    font-family: 'DM Sans', sans-serif;
+    background: var(--sand-light);
     color: var(--charcoal);
     overflow-x: hidden;
   }
 
-  /* NAV */
+  /* ── NAV ── */
   nav {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -48,545 +50,351 @@
     transition: background 0.5s, backdrop-filter 0.5s;
   }
   nav.scrolled {
-    background: rgba(28,43,30,0.92);
+    background: rgba(42,100,122,0.93);
     backdrop-filter: blur(12px);
   }
   .nav-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.6rem;
-    font-weight: 300;
-    letter-spacing: 0.12em;
-    color: var(--gold-light);
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.9rem;
+    font-weight: 600;
+    color: var(--white);
     text-decoration: none;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.18);
   }
   .nav-links {
-    display: flex;
-    gap: 2.5rem;
-    list-style: none;
+    display: flex; gap: 2.5rem; list-style: none;
   }
   .nav-links a {
-    font-size: 0.7rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.75);
-    text-decoration: none;
-    transition: color 0.3s;
+    font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: rgba(255,255,255,0.85); text-decoration: none;
+    transition: color 0.3s; font-weight: 400;
   }
-  .nav-links a:hover { color: var(--gold-light); }
-  .nav-links a.active { color: var(--gold-light); }
+  .nav-links a:hover { color: var(--sun-pale); }
+  .nav-links a.active { color: var(--sun-pale); }
 
-  /* RESERVE HERO */
+  /* ── HERO ── */
   .reserve-hero {
     position: relative;
     min-height: 50vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
     overflow: hidden;
-    background: var(--deep-forest);
     padding: 8rem 2rem 5rem;
   }
   .reserve-hero-bg {
-    position: absolute;
-    inset: 0;
+    position: absolute; inset: 0;
     background:
-      radial-gradient(ellipse at 20% 50%, rgba(45,74,49,0.6) 0%, transparent 60%),
-      radial-gradient(ellipse at 80% 20%, rgba(184,150,90,0.12) 0%, transparent 50%),
-      linear-gradient(160deg, #0d1a0e 0%, #1C2B1E 40%, #243322 100%);
+      radial-gradient(ellipse at 50% -10%, rgba(255,215,140,0.55) 0%, transparent 50%),
+      radial-gradient(ellipse at 20% 85%,  rgba(74,143,168,0.45)  0%, transparent 50%),
+      radial-gradient(ellipse at 80% 75%,  rgba(74,143,168,0.3)   0%, transparent 45%),
+      linear-gradient(175deg, #EEB86A 0%, #D47A38 25%, #7BB3C8 65%, #4A8FA8 100%);
   }
+  .reserve-hero-bg::after {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 30% 40%, rgba(255,255,255,0.18) 0%, transparent 50%),
+      radial-gradient(ellipse at 70% 60%, rgba(255,255,255,0.12) 0%, transparent 45%);
+  }
+
+  /* Sun ornament */
   .reserve-hero-ornament {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: min(700px, 90vw);
-    height: min(700px, 90vw);
-    border: 1px solid rgba(184,150,90,0.06);
-    border-radius: 50%;
-    animation: rotate 60s linear infinite;
+    top: 6%; right: 7%;
+    width: 160px; height: 160px;
+    pointer-events: none; opacity: 0.22;
   }
-  @keyframes rotate { to { transform: translate(-50%, -50%) rotate(360deg); } }
+  .reserve-hero-ornament::before {
+    content: '';
+    position: absolute; inset: 22px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,228,100,0.9) 20%, rgba(255,185,50,0.5) 60%, transparent 100%);
+    animation: sunGlow 4s ease-in-out infinite;
+  }
+  .reserve-hero-ornament::after {
+    content: '';
+    position: absolute; inset: 0; border-radius: 50%;
+    background: conic-gradient(
+      rgba(255,210,80,0) 0deg, rgba(255,210,80,0.35) 7deg, rgba(255,210,80,0) 14deg,
+      rgba(255,210,80,0) 26deg,rgba(255,210,80,0.35) 33deg,rgba(255,210,80,0) 40deg,
+      rgba(255,210,80,0) 52deg,rgba(255,210,80,0.35) 59deg,rgba(255,210,80,0) 66deg,
+      rgba(255,210,80,0) 78deg,rgba(255,210,80,0.35) 85deg,rgba(255,210,80,0) 92deg,
+      rgba(255,210,80,0) 104deg,rgba(255,210,80,0.35) 111deg,rgba(255,210,80,0) 118deg,
+      rgba(255,210,80,0) 130deg,rgba(255,210,80,0.35) 137deg,rgba(255,210,80,0) 144deg,
+      rgba(255,210,80,0) 156deg,rgba(255,210,80,0.35) 163deg,rgba(255,210,80,0) 170deg,
+      rgba(255,210,80,0) 182deg,rgba(255,210,80,0.35) 189deg,rgba(255,210,80,0) 196deg,
+      rgba(255,210,80,0) 208deg,rgba(255,210,80,0.35) 215deg,rgba(255,210,80,0) 222deg,
+      rgba(255,210,80,0) 234deg,rgba(255,210,80,0.35) 241deg,rgba(255,210,80,0) 248deg,
+      rgba(255,210,80,0) 260deg,rgba(255,210,80,0.35) 267deg,rgba(255,210,80,0) 274deg,
+      rgba(255,210,80,0) 286deg,rgba(255,210,80,0.35) 293deg,rgba(255,210,80,0) 300deg,
+      rgba(255,210,80,0) 312deg,rgba(255,210,80,0.35) 319deg,rgba(255,210,80,0) 326deg,
+      rgba(255,210,80,0) 338deg,rgba(255,210,80,0.35) 345deg,rgba(255,210,80,0) 352deg
+    );
+    animation: sunSpin 40s linear infinite; opacity: 0.6;
+  }
+  @keyframes sunGlow { 0%,100%{transform:scale(1);opacity:.9} 50%{transform:scale(1.07);opacity:1} }
+  @keyframes sunSpin { to { transform: rotate(360deg); } }
+
+  /* Wave bottom of hero */
+  .reserve-hero-wave {
+    position: absolute; bottom: -2px; left: 0; right: 0;
+    height: 70px; overflow: hidden; pointer-events: none;
+  }
+  .reserve-hero-wave svg { display: block; width: 100%; height: 100%; }
+
   .reserve-hero-content {
-    position: relative;
-    text-align: center;
+    position: relative; text-align: center; z-index: 2;
     animation: fadeUp 1.2s ease both;
   }
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
+    to   { opacity: 1; transform: translateY(0); }
   }
   .reserve-eyebrow {
-    font-size: 0.65rem;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1.5rem;
+    font-size: 0.65rem; letter-spacing: 0.35em; text-transform: uppercase;
+    color: rgba(255,255,255,0.9); margin-bottom: 1.5rem;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.12);
   }
   .reserve-title {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Playfair Display', serif;
     font-size: clamp(3rem, 8vw, 5.5rem);
-    font-weight: 300;
-    line-height: 1;
-    color: #fff;
-    letter-spacing: -0.01em;
-    margin-bottom: 1rem;
+    font-weight: 400; line-height: 1;
+    color: var(--white); letter-spacing: -0.01em; margin-bottom: 1rem;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.12);
   }
   .reserve-title em {
-    font-style: italic;
-    color: var(--gold-light);
+    font-family: 'Dancing Script', cursive;
+    font-style: normal; font-weight: 700;
+    color: var(--sun-pale); font-size: 1.08em;
   }
   .reserve-subtitle {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Playfair Display', serif;
     font-size: clamp(0.95rem, 2vw, 1.25rem);
-    font-weight: 300;
-    font-style: italic;
-    color: rgba(255,255,255,0.5);
-    letter-spacing: 0.06em;
-    max-width: 500px;
-    margin: 0 auto;
+    font-weight: 400; font-style: italic;
+    color: rgba(255,255,255,0.8); letter-spacing: 0.06em;
+    max-width: 500px; margin: 0 auto;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.1);
   }
   .reserve-divider {
-    width: 60px;
-    height: 1px;
-    background: var(--gold);
+    width: 60px; height: 1px;
+    background: rgba(255,255,255,0.5);
     margin: 2rem auto 0;
   }
 
-  /* GOLD RULE */
+  /* ── GOLD RULE ── */
   .gold-rule {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin: 2rem 0;
+    display: flex; align-items: center; gap: 1rem; margin: 2rem 0;
   }
   .gold-rule::before, .gold-rule::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
+    content: ''; flex: 1; height: 1px; background: var(--border);
   }
   .gold-rule-diamond {
-    width: 6px;
-    height: 6px;
-    background: var(--gold);
-    transform: rotate(45deg);
-    flex-shrink: 0;
+    width: 7px; height: 7px;
+    background: var(--sun-light); border-radius: 50%; flex-shrink: 0;
   }
 
-  /* FORM SECTION */
+  /* ── FORM SECTION ── */
   .reserve-section {
     padding: 5rem 4rem 6rem;
-    background: var(--cream);
+    background: var(--sand-light);
   }
   .reserve-form-container {
-    max-width: 820px;
-    margin: 0 auto;
-    width: 100%;
+    max-width: 820px; margin: 0 auto; width: 100%;
   }
-  .form-intro {
-    text-align: center;
-    margin-bottom: 3rem;
-  }
+  .form-intro { text-align: center; margin-bottom: 3rem; }
   .form-intro-text {
-    font-size: 0.95rem;
-    font-weight: 300;
-    line-height: 1.8;
-    color: var(--muted);
-    max-width: 520px;
-    margin: 0 auto;
+    font-size: 0.95rem; font-weight: 300; line-height: 1.8;
+    color: var(--driftwood-light); max-width: 520px; margin: 0 auto;
   }
 
-  .form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.8rem 2.5rem;
-  }
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  .form-group.full-width {
-    grid-column: 1 / -1;
-  }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.8rem 2.5rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+  .form-group.full-width { grid-column: 1 / -1; }
+
   .form-label {
-    font-size: 0.6rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--muted);
+    font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--driftwood-light);
   }
-  .form-label .required {
-    color: var(--gold);
-    margin-left: 0.2em;
-  }
-  .form-input,
-  .form-select,
-  .form-textarea {
-    font-family: 'Jost', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 300;
+  .form-label .required { color: var(--sun); margin-left: 0.2em; }
+
+  .form-input, .form-select, .form-textarea {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem; font-weight: 300;
     color: var(--charcoal);
-    background: var(--warm-white);
+    background: var(--white);
     border: 1px solid var(--border);
     padding: 0.9rem 1.1rem;
     transition: border-color 0.3s, box-shadow 0.3s;
-    outline: none;
-    -webkit-appearance: none;
-    appearance: none;
-    border-radius: 0;
-    width: 100%;
-    box-sizing: border-box;
+    outline: none; -webkit-appearance: none; appearance: none;
+    border-radius: 2px; width: 100%;
   }
-  .form-input:focus,
-  .form-select:focus,
-  .form-textarea:focus {
-    border-color: var(--gold);
-    box-shadow: 0 0 0 3px rgba(184,150,90,0.1);
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: var(--ocean);
+    box-shadow: 0 0 0 3px rgba(74,143,168,0.1);
   }
-  .form-input::placeholder,
-  .form-textarea::placeholder {
-    color: rgba(122,112,96,0.5);
-    font-weight: 200;
+  .form-input::placeholder, .form-textarea::placeholder {
+    color: rgba(168,144,112,0.5); font-weight: 300;
   }
   .form-select {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23B8965A' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234A8FA8' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 1.1rem center;
-    padding-right: 2.8rem;
-    cursor: pointer;
+    padding-right: 2.8rem; cursor: pointer;
   }
-  .form-select option {
-    font-family: 'Jost', sans-serif;
-  }
-  .form-textarea {
-    resize: vertical;
-    min-height: 110px;
-    line-height: 1.7;
-  }
+  .form-select option { font-family: 'DM Sans', sans-serif; }
+  .form-textarea { resize: vertical; min-height: 110px; line-height: 1.7; }
 
   /* ITINERARY */
   .itinerary-heading {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Playfair Display', serif;
     font-size: clamp(1.8rem, 4vw, 2.8rem);
-    font-weight: 300;
-    color: var(--deep-forest);
-    text-align: center;
-    margin-bottom: 2rem;
+    font-weight: 400; color: var(--charcoal);
+    text-align: center; margin-bottom: 2rem;
   }
-  .itinerary-details {
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  .itinerary-meta {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-bottom: 2rem;
-  }
-  .itinerary-item {
-    display: flex;
-    gap: 1.5rem;
-    align-items: baseline;
-  }
+  .itinerary-details { max-width: 600px; margin: 0 auto; }
+  .itinerary-meta { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem; }
+  .itinerary-item { display: flex; gap: 1.5rem; align-items: baseline; }
   .itinerary-label {
-    font-size: 0.6rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--gold);
-    min-width: 70px;
-    flex-shrink: 0;
+    font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--ocean); min-width: 70px; flex-shrink: 0;
   }
-  .itinerary-value {
-    font-size: 1rem;
-    font-weight: 300;
-    color: var(--charcoal);
-    line-height: 1.6;
-  }
-  .itinerary-schedule {
-    margin-top: 2rem;
-  }
+  .itinerary-value { font-size: 1rem; font-weight: 300; color: var(--charcoal); line-height: 1.6; }
+  .itinerary-schedule { margin-top: 2rem; }
   .itinerary-schedule-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.4rem;
-    font-weight: 300;
-    color: var(--deep-forest);
-    margin-bottom: 1.2rem;
-    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; font-weight: 400;
+    color: var(--charcoal); margin-bottom: 1.2rem; text-align: center;
   }
   .itinerary-day {
-    display: flex;
-    gap: 1.5rem;
-    align-items: baseline;
-    padding: 0.6rem 0;
-    border-bottom: 1px solid var(--border);
+    display: flex; gap: 1.5rem; align-items: baseline;
+    padding: 0.6rem 0; border-bottom: 1px solid var(--border);
   }
-  .itinerary-day:last-child {
-    border-bottom: none;
-  }
+  .itinerary-day:last-child { border-bottom: none; }
   .itinerary-day-label {
-    font-size: 0.65rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--gold);
-    min-width: 70px;
-    flex-shrink: 0;
-    font-weight: 400;
+    font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--ocean); min-width: 70px; flex-shrink: 0; font-weight: 500;
   }
-  .itinerary-day-desc {
-    font-size: 0.95rem;
-    font-weight: 300;
-    color: var(--charcoal);
-  }
+  .itinerary-day-desc { font-size: 0.95rem; font-weight: 300; color: var(--charcoal); }
 
-  /* CHECKBOX GROUP */
-  .checkbox-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.8rem 1.5rem;
-    padding: 0.5rem 0;
-  }
+  /* CHECKBOXES */
+  .checkbox-group { display: flex; flex-wrap: wrap; gap: 0.8rem 1.5rem; padding: 0.5rem 0; }
   .checkbox-label {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.9rem;
-    font-weight: 300;
-    color: var(--charcoal);
-    cursor: pointer;
-    user-select: none;
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.9rem; font-weight: 300; color: var(--charcoal);
+    cursor: pointer; user-select: none;
   }
   .checkbox-label input[type="checkbox"],
-  .checkbox-label input[type="radio"] {
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
+  .checkbox-label input[type="radio"] { position: absolute; opacity: 0; width: 0; height: 0; }
   .checkbox-custom {
-    width: 18px;
-    height: 18px;
+    width: 18px; height: 18px;
     border: 1px solid var(--border);
-    background: var(--warm-white);
+    background: var(--white);
     flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     transition: border-color 0.3s, background 0.3s;
+    border-radius: 2px;
   }
-  .checkbox-label input[type="radio"] + .checkbox-custom {
-    border-radius: 50%;
-  }
+  .checkbox-label input[type="radio"] + .checkbox-custom { border-radius: 50%; }
   .checkbox-label input[type="checkbox"]:checked + .checkbox-custom,
   .checkbox-label input[type="radio"]:checked + .checkbox-custom {
-    border-color: var(--gold);
-    background: var(--gold-light);
+    border-color: var(--ocean); background: var(--ocean);
   }
   .checkbox-label input[type="checkbox"]:checked + .checkbox-custom::after,
   .checkbox-label input[type="radio"]:checked + .checkbox-custom::after {
-    content: '✓';
-    font-size: 0.7rem;
-    color: var(--deep-forest);
-    font-weight: 600;
+    content: '✓'; font-size: 0.7rem; color: var(--white); font-weight: 600;
   }
-  .checkbox-label input[type="checkbox"]:focus + .checkbox-custom,
-  .checkbox-label input[type="radio"]:focus + .checkbox-custom {
-    box-shadow: 0 0 0 3px rgba(184,150,90,0.1);
-  }
-  .checkbox-note {
-    font-size: 0.8rem;
-    color: var(--muted);
-  }
+  .checkbox-label input:focus + .checkbox-custom { box-shadow: 0 0 0 3px rgba(74,143,168,0.15); }
+  .checkbox-note { font-size: 0.8rem; color: var(--driftwood-light); }
 
   /* SUBMIT */
-  .form-actions {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding-top: 1rem;
-  }
+  .form-actions { grid-column: 1 / -1; text-align: center; padding-top: 1rem; }
   .form-submit {
     display: inline-block;
-    font-family: 'Jost', sans-serif;
-    font-size: 0.65rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--deep-forest);
-    background: var(--gold-light);
-    border: none;
-    padding: 1.2rem 3.5rem;
-    cursor: pointer;
-    transition: background 0.3s, letter-spacing 0.3s;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--white); background: var(--ocean);
+    border: none; padding: 1.2rem 3.5rem;
+    cursor: pointer; transition: background 0.3s, letter-spacing 0.3s;
+    border-radius: 2px; font-weight: 500;
   }
-  .form-submit:hover {
-    background: var(--gold-pale);
-    letter-spacing: 0.35em;
-  }
-  .form-submit:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
+  .form-submit:hover { background: var(--ocean-light); letter-spacing: 0.35em; }
+  .form-submit:disabled { opacity: 0.5; cursor: not-allowed; }
 
-  /* SUCCESS STATE */
-  .form-success {
-    display: none;
-    text-align: center;
-    padding: 4rem 2rem;
-    animation: fadeUp 0.8s ease both;
-  }
-  .form-success.visible {
-    display: block;
-  }
-  .success-icon {
-    font-size: 3rem;
-    margin-bottom: 1.5rem;
-    display: block;
-  }
+  /* SUCCESS */
+  .form-success { display: none; text-align: center; padding: 4rem 2rem; animation: fadeUp 0.8s ease both; }
+  .form-success.visible { display: block; }
+  .success-icon { font-size: 3rem; margin-bottom: 1.5rem; display: block; }
   .success-title {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Playfair Display', serif;
     font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 300;
-    color: var(--deep-forest);
-    line-height: 1.15;
-    margin-bottom: 1rem;
+    font-weight: 400; color: var(--charcoal); line-height: 1.15; margin-bottom: 1rem;
   }
   .success-title em {
-    font-style: italic;
-    color: var(--forest);
+    font-family: 'Dancing Script', cursive;
+    font-style: normal; font-weight: 700; color: var(--sun);
   }
   .success-text {
-    font-size: 1rem;
-    font-weight: 300;
-    line-height: 1.8;
-    color: var(--muted);
-    max-width: 440px;
-    margin: 0 auto 2.5rem;
+    font-size: 1rem; font-weight: 300; line-height: 1.8;
+    color: var(--driftwood-light); max-width: 440px; margin: 0 auto 2.5rem;
   }
   .success-link {
     display: inline-block;
-    font-size: 0.65rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--deep-forest);
-    border-bottom: 1px solid var(--gold);
-    padding-bottom: 0.3rem;
-    text-decoration: none;
-    transition: color 0.3s;
+    font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--ocean); border-bottom: 1px solid var(--ocean-light);
+    padding-bottom: 0.3rem; text-decoration: none; transition: color 0.3s;
   }
-  .success-link:hover {
-    color: var(--gold);
-  }
+  .success-link:hover { color: var(--sun); }
 
-  /* VALIDATION ERROR */
-  .form-input.error,
-  .form-select.error,
-  .form-textarea.error {
-    border-color: #a04040;
-  }
-  .form-error {
-    font-size: 0.7rem;
-    color: #a04040;
-    font-weight: 300;
-    display: none;
-  }
-  .form-error.visible {
-    display: block;
-  }
+  /* VALIDATION */
+  .form-input.error, .form-select.error, .form-textarea.error { border-color: #b04040; }
+  .form-error { font-size: 0.7rem; color: #b04040; font-weight: 300; display: none; }
+  .form-error.visible { display: block; }
 
-  /* FOOTER */
+  /* ── FOOTER ── */
   footer {
-    background: #0D1A0E;
+    background: var(--charcoal);
     padding: 4rem;
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: center;
-    gap: 2rem;
+    display: grid; grid-template-columns: 1fr auto 1fr;
+    align-items: center; gap: 2rem;
   }
   .footer-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2rem;
-    font-weight: 300;
-    color: var(--gold-light);
-    letter-spacing: 0.1em;
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.2rem; font-weight: 600;
+    color: var(--sun-pale); letter-spacing: 0.02em;
   }
   .footer-tagline {
-    font-size: 0.65rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.2);
-    margin-top: 0.3rem;
+    font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: rgba(255,255,255,0.22); margin-top: 0.3rem;
   }
-  .footer-center {
-    text-align: center;
-  }
+  .footer-center { text-align: center; }
   .footer-ornament {
-    width: 1px;
-    height: 60px;
-    background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+    width: 1px; height: 60px;
+    background: linear-gradient(to bottom, transparent, var(--sun-light), transparent);
     margin: 0 auto 1.5rem;
   }
   .footer-legal {
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.2);
-    text-align: right;
+    font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: rgba(255,255,255,0.2); text-align: right;
   }
 
-  /* ─── RESPONSIVE ─────────────────────────────── */
-
+  /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
-    nav {
-      padding: 1.2rem 1.5rem;
-    }
-    .nav-links {
-      display: none;
-    }
-    .reserve-hero {
-      padding: 7rem 1.5rem 3.5rem;
-      min-height: 40vh;
-    }
-    .reserve-section {
-      padding: 3.5rem 1.2rem 4rem;
-    }
-    .form-grid {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
-    .form-group.full-width {
-      grid-column: auto;
-    }
-    .form-label {
-      letter-spacing: 0.15em;
-      font-size: 0.55rem;
-    }
-    .checkbox-group {
-      flex-direction: column;
-      gap: 0.6rem;
-    }
-    footer {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-      padding: 3rem 1.5rem;
-      text-align: center;
-    }
+    nav { padding: 1.2rem 1.5rem; }
+    .nav-links { display: none; }
+    .reserve-hero { padding: 7rem 1.5rem 3.5rem; min-height: 40vh; }
+    .reserve-hero-ornament { width: 100px; height: 100px; right: 4%; top: 6%; }
+    .reserve-section { padding: 3.5rem 1.2rem 4rem; }
+    .form-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .form-group.full-width { grid-column: auto; }
+    .form-label { letter-spacing: 0.15em; font-size: 0.55rem; }
+    .checkbox-group { flex-direction: column; gap: 0.6rem; }
+    footer { grid-template-columns: 1fr; gap: 1.5rem; padding: 3rem 1.5rem; text-align: center; }
     .footer-center { order: -1; }
     .footer-ornament { display: none; }
     .footer-legal { text-align: center; }
   }
-
   @media (max-width: 420px) {
     .reserve-title { font-size: clamp(2.5rem, 14vw, 3.5rem); }
-    .form-submit {
-      width: 100%;
-    }
-    .itinerary-item {
-      flex-direction: column;
-      gap: 0.3rem;
-    }
-    .itinerary-day {
-      flex-direction: column;
-      gap: 0.3rem;
-    }
+    .form-submit { width: 100%; }
+    .itinerary-item, .itinerary-day { flex-direction: column; gap: 0.3rem; }
   }
 </style>
 </head>
@@ -603,7 +411,7 @@
   </ul>
 </nav>
 
-<!-- RESERVE HERO -->
+<!-- HERO -->
 <section class="reserve-hero">
   <div class="reserve-hero-bg"></div>
   <div class="reserve-hero-ornament"></div>
@@ -613,15 +421,19 @@
     <p class="reserve-subtitle">Choose your sanctuary, tell us your wishes, and we shall prepare everything for your arrival.</p>
     <div class="reserve-divider"></div>
   </div>
+  <div class="reserve-hero-wave">
+    <svg viewBox="0 0 1440 70" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,35 C200,65 400,10 600,40 C800,70 1000,15 1200,45 C1320,60 1400,35 1440,35 L1440,70 L0,70 Z" fill="#FAF7EE"/>
+    </svg>
+  </div>
 </section>
 
-<!-- ITINERARY SECTION -->
+<!-- ITINERARY -->
 <section class="reserve-section" style="padding-bottom: 0;">
   <div class="reserve-form-container">
     <div class="form-intro">
       <div class="gold-rule"><div class="gold-rule-diamond"></div></div>
     </div>
-
     <div class="itinerary-details">
       <div class="itinerary-meta">
         <div class="itinerary-item">
@@ -633,9 +445,7 @@
           <span class="itinerary-value">Hogswartz — 4610 Scottdale Rd. St Joseph, MI</span>
         </div>
       </div>
-
       <div class="gold-rule"><div class="gold-rule-diamond"></div></div>
-
       <div class="itinerary-schedule">
         <h3 class="itinerary-schedule-title">Itinerary</h3>
         <div class="itinerary-day">
@@ -655,34 +465,29 @@
   </div>
 </section>
 
-<!-- FORM SECTION -->
+<!-- FORM -->
 <section class="reserve-section">
   <div class="reserve-form-container">
-
     <div class="form-intro">
       <div class="gold-rule"><div class="gold-rule-diamond"></div></div>
       <p class="form-intro-text">Please complete the details below to RSVP.</p>
     </div>
 
     <form id="reserveForm" action="https://docs.google.com/forms/d/e/1FAIpQLSfnhcHo3_LKT3uaoSzm2nRPYC1pix9bMBBfDpZhpnlq5MxYJw/formResponse" method="POST" target="hidden_iframe" novalidate>
-
       <div class="form-grid">
 
-        <!-- Full Name -->
         <div class="form-group">
           <label class="form-label" for="fullName">Name <span class="required">*</span></label>
           <input type="text" id="fullName" name="entry.2092238618" class="form-input" placeholder="Your name" required>
           <span class="form-error" data-for="fullName">Please enter your name</span>
         </div>
 
-        <!-- Email -->
         <div class="form-group">
           <label class="form-label" for="email">Email <span class="required">*</span></label>
           <input type="email" id="email" name="entry.1556369182" class="form-input" placeholder="your@email.com" required>
           <span class="form-error" data-for="email">Please enter a valid email</span>
         </div>
 
-        <!-- Will you attend? -->
         <div class="form-group full-width">
           <label class="form-label">Will you attend? <span class="required">*</span></label>
           <div class="checkbox-group" id="attendGroup">
@@ -700,7 +505,6 @@
           <span class="form-error" data-for="attendGroup">Please select at least one night</span>
         </div>
 
-        <!-- Preferred Chamber -->
         <div class="form-group full-width">
           <label class="form-label" for="chamber">Preferred Chamber</label>
           <select id="chamber" name="entry.REPLACE_CHAMBER" class="form-select">
@@ -712,74 +516,28 @@
           </select>
         </div>
 
-        <!-- Dietary Restrictions (radio — single select in Google Form) -->
         <div class="form-group full-width">
           <label class="form-label">Dietary Restrictions / Allergies <span class="required">*</span></label>
           <div class="checkbox-group" id="dietaryGroup">
-            <label class="checkbox-label">
-              <input type="radio" name="entry.588393791" value="None">
-              <span class="checkbox-custom"></span>
-              None
-            </label>
-            <label class="checkbox-label">
-              <input type="radio" name="entry.588393791" value="Vegetarian">
-              <span class="checkbox-custom"></span>
-              Vegetarian
-            </label>
-            <label class="checkbox-label">
-              <input type="radio" name="entry.588393791" value="Vegan">
-              <span class="checkbox-custom"></span>
-              Vegan
-            </label>
-            <label class="checkbox-label">
-              <input type="radio" name="entry.588393791" value="Gluten-free">
-              <span class="checkbox-custom"></span>
-              Gluten-free
-            </label>
-            <label class="checkbox-label">
-              <input type="radio" name="entry.588393791" value="__other_option__" id="dietaryOtherRadio">
-              <span class="checkbox-custom"></span>
-              Other
-            </label>
+            <label class="checkbox-label"><input type="radio" name="entry.588393791" value="None"><span class="checkbox-custom"></span>None</label>
+            <label class="checkbox-label"><input type="radio" name="entry.588393791" value="Vegetarian"><span class="checkbox-custom"></span>Vegetarian</label>
+            <label class="checkbox-label"><input type="radio" name="entry.588393791" value="Vegan"><span class="checkbox-custom"></span>Vegan</label>
+            <label class="checkbox-label"><input type="radio" name="entry.588393791" value="Gluten-free"><span class="checkbox-custom"></span>Gluten-free</label>
+            <label class="checkbox-label"><input type="radio" name="entry.588393791" value="__other_option__" id="dietaryOtherRadio"><span class="checkbox-custom"></span>Other</label>
           </div>
           <input type="text" id="dietaryOther" name="entry.588393791.other_option_response" class="form-input" placeholder="Please specify…" style="margin-top: 0.5rem; display: none;">
           <span class="form-error" data-for="dietaryGroup">Please select an option</span>
         </div>
 
-        <!-- Coffee/Caffeine Preference -->
         <div class="form-group full-width">
           <label class="form-label">Coffee / Caffeine Preference <span class="required">*</span></label>
           <div class="checkbox-group" id="coffeeGroup">
-            <label class="checkbox-label">
-              <input type="checkbox" name="entry.310830418" value="None">
-              <span class="checkbox-custom"></span>
-              None
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" name="entry.310830418" value="Coffee">
-              <span class="checkbox-custom"></span>
-              Coffee
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" name="entry.310830418" value="Tea">
-              <span class="checkbox-custom"></span>
-              Tea
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" name="entry.310830418" value="Cream">
-              <span class="checkbox-custom"></span>
-              Cream
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" name="entry.310830418" value="Sugar">
-              <span class="checkbox-custom"></span>
-              Sugar
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" name="entry.310830418" value="__other_option__" id="coffeeOtherCheck">
-              <span class="checkbox-custom"></span>
-              Other
-            </label>
+            <label class="checkbox-label"><input type="checkbox" name="entry.310830418" value="None"><span class="checkbox-custom"></span>None</label>
+            <label class="checkbox-label"><input type="checkbox" name="entry.310830418" value="Coffee"><span class="checkbox-custom"></span>Coffee</label>
+            <label class="checkbox-label"><input type="checkbox" name="entry.310830418" value="Tea"><span class="checkbox-custom"></span>Tea</label>
+            <label class="checkbox-label"><input type="checkbox" name="entry.310830418" value="Cream"><span class="checkbox-custom"></span>Cream</label>
+            <label class="checkbox-label"><input type="checkbox" name="entry.310830418" value="Sugar"><span class="checkbox-custom"></span>Sugar</label>
+            <label class="checkbox-label"><input type="checkbox" name="entry.310830418" value="__other_option__" id="coffeeOtherCheck"><span class="checkbox-custom"></span>Other</label>
           </div>
           <input type="text" id="coffeeOther" name="entry.310830418.other_option_response" class="form-input" placeholder="Preferred brands/flavors…" style="margin-top: 0.5rem; display: none;">
           <span class="form-error" data-for="coffeeGroup">Please select at least one option</span>
@@ -792,10 +550,9 @@
       </div>
     </form>
 
-    <!-- Success Message -->
     <div class="form-success" id="formSuccess">
-      <span class="success-icon">✨</span>
-      <h2 class="success-title">You're <em>In</em></h2>
+      <span class="success-icon">🌊</span>
+      <h2 class="success-title">You're <em>In!</em></h2>
       <p class="success-text">Thank you — your RSVP has been received. See you at Hogswartz for the Weekend in the Riviera!</p>
       <a href="/" class="success-link">Return to the Estate</a>
     </div>
@@ -803,7 +560,6 @@
   </div>
 </section>
 
-<!-- Hidden iframe for Google Forms submission (prevents redirect) -->
 <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
 
 <!-- FOOTER -->
@@ -814,21 +570,15 @@
   </div>
   <div class="footer-center">
     <div class="footer-ornament"></div>
-    <div style="font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(184,150,90,0.4);">Est. 2026</div>
+    <div style="font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(245,212,160,0.35);">Est. 2026</div>
   </div>
-  <div class="footer-legal">
-    Where friends become<br>legendary guests
-  </div>
+  <div class="footer-legal">Where friends become<br>legendary guests</div>
 </footer>
 
 <script>
-  // Nav scroll effect
   const nav = document.getElementById('mainNav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 80);
-  });
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 80));
 
-  // Show/hide "Other" text fields
   const dietaryOtherRadio = document.getElementById('dietaryOtherRadio');
   const dietaryOtherInput = document.getElementById('dietaryOther');
   document.querySelectorAll('input[name="entry.588393791"]').forEach(radio => {
@@ -845,68 +595,41 @@
     if (!coffeeOtherCheck.checked) coffeeOtherInput.value = '';
   });
 
-  // Form validation & submission
   const form = document.getElementById('reserveForm');
   const submitBtn = document.getElementById('submitBtn');
   const successDiv = document.getElementById('formSuccess');
 
   form.addEventListener('submit', function(e) {
-    // Clear previous errors
     form.querySelectorAll('.form-error').forEach(el => el.classList.remove('visible'));
     form.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
-
     let valid = true;
 
-    // Validate text/email fields
-    const checks = [
-      { id: 'fullName', test: v => v.trim().length > 0 },
-      { id: 'email', test: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) }
-    ];
-
-    checks.forEach(({ id, test }) => {
+    [{ id: 'fullName', test: v => v.trim().length > 0 },
+     { id: 'email',    test: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) }
+    ].forEach(({ id, test }) => {
       const el = document.getElementById(id);
       if (!test(el.value)) {
-        valid = false;
-        el.classList.add('error');
+        valid = false; el.classList.add('error');
         const err = form.querySelector(`.form-error[data-for="${id}"]`);
         if (err) err.classList.add('visible');
       }
     });
 
-    // Validate attend checkboxes
-    const attendChecked = document.querySelectorAll('#attendGroup input[type="checkbox"]:checked');
-    if (attendChecked.length === 0) {
+    if (!document.querySelectorAll('#attendGroup input[type="checkbox"]:checked').length) {
       valid = false;
-      const err = form.querySelector('.form-error[data-for="attendGroup"]');
-      if (err) err.classList.add('visible');
+      form.querySelector('.form-error[data-for="attendGroup"]')?.classList.add('visible');
     }
-
-    // Validate dietary radio
-    const dietaryChecked = document.querySelector('input[name="entry.588393791"]:checked');
-    if (!dietaryChecked) {
+    if (!document.querySelector('input[name="entry.588393791"]:checked')) {
       valid = false;
-      const err = form.querySelector('.form-error[data-for="dietaryGroup"]');
-      if (err) err.classList.add('visible');
+      form.querySelector('.form-error[data-for="dietaryGroup"]')?.classList.add('visible');
     }
-
-    // Validate coffee checkboxes
-    const coffeeChecked = document.querySelectorAll('#coffeeGroup input[type="checkbox"]:checked');
-    if (coffeeChecked.length === 0) {
+    if (!document.querySelectorAll('#coffeeGroup input[type="checkbox"]:checked').length) {
       valid = false;
-      const err = form.querySelector('.form-error[data-for="coffeeGroup"]');
-      if (err) err.classList.add('visible');
+      form.querySelector('.form-error[data-for="coffeeGroup"]')?.classList.add('visible');
     }
 
-    if (!valid) {
-      e.preventDefault();
-      return;
-    }
-
-    // Disable button
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Sending…';
-
-    // Show success after a brief delay (form submits to hidden iframe)
+    if (!valid) { e.preventDefault(); return; }
+    submitBtn.disabled = true; submitBtn.textContent = 'Sending…';
     setTimeout(() => {
       form.style.display = 'none';
       document.querySelector('.form-intro').style.display = 'none';
