@@ -431,26 +431,18 @@
   .room-visual-bg { position: absolute; inset: 0; transition: transform 0.8s ease; }
   .room-card:hover .room-visual-bg { transform: scale(1.04); }
 
-  /* Watercolor beach room palettes */
+  /* Room photos */
   .room-1 .room-visual-bg {
-    background:
-      radial-gradient(ellipse at 30% 25%, rgba(200,228,240,0.7) 0%, transparent 55%),
-      linear-gradient(145deg, #3D7D96 0%, #5A9DB5 45%, #7BBCCC 100%);
+    background: url('/images/fariyhollow.png') center/cover no-repeat;
   }
   .room-2 .room-visual-bg {
-    background:
-      radial-gradient(ellipse at 70% 35%, rgba(245,210,150,0.65) 0%, transparent 55%),
-      linear-gradient(145deg, #B8703A 0%, #CC8A50 45%, #DFA870 100%);
+    background: url('/images/explorersnook.png') center/cover no-repeat;
   }
   .room-3 .room-visual-bg {
-    background:
-      radial-gradient(ellipse at 35% 65%, rgba(175,220,235,0.6) 0%, transparent 55%),
-      linear-gradient(145deg, #5898B0 0%, #75B2C8 45%, #98CCE0 100%);
+    background: url('/images/writersroom.png') center/cover no-repeat;
   }
   .room-4 .room-visual-bg {
-    background:
-      radial-gradient(ellipse at 65% 25%, rgba(240,195,140,0.6) 0%, transparent 55%),
-      linear-gradient(145deg, #C08048 0%, #D49860 45%, #E8B880 100%);
+    background: url('/images/sunbeamroom.png') center/cover no-repeat;
   }
 
   .room-visual-overlay {
@@ -458,9 +450,7 @@
     display: flex; align-items: center; justify-content: center;
   }
   .room-illustration {
-    width: 220px;
-    opacity: 0.28;
-    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.2));
+    display: none;
   }
   .room-number {
     position: absolute;
